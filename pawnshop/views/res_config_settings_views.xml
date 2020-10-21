@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.pawn</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="pawnshop" string="Pawnshop" data-key="pawnshop">
+                        <h2>Rates</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box" title="Rates used for pawnshop computed fields">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Rate Loan
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Loan" for="default_rate_comm" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_loan"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Rate Stock
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Stock" for="default_rate_stock" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_stock"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Rate Admin
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Admin" for="default_rate_admin" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_admin"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="action_pawnshop_config" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'pawnshop'}</field>
+        </record>
+
+        <menuitem id="menu_pawnshop_config" name="Settings" parent="pawnshop.pawn_root_menu"
+            sequence="100" action="action_pawnshop_config" groups=""/>
+    </data>
+</odoo>

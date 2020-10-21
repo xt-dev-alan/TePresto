@@ -24,7 +24,7 @@
                     <header>
                         <field name="state" widget="statusbar"/>
                         <button string="Accept" name="action_accept" type="object" class="oe_highlight" states="draft"/>
-                        <button string="Create Orden" name="create_order" type="object" class="oe_highlight" states="accept"/>
+                        <button string="Create Order" name="create_order" type="object" class="oe_highlight" states="accept"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -62,7 +62,11 @@
                                 <field name="pawn_id" invisible="1"/>
                             </tree>
                         </field>
-        
+                         <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <field name="amount_loan" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_stock" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_admin" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
                     </sheet>
 
                     <div class="oe_chatter">
@@ -75,6 +79,68 @@
                 </form>
             </field>
         </record>
+
+
+    <record id="pawn_order_view_tree" model="ir.ui.view">
+        <field name="name">pawn.order.view.tree</field>
+        <field name="model">pawn.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="date" />
+                <field name="partner_id" />
+                <field name="user_id" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="pawn_order_view_form" model="ir.ui.view">
+        <field name="name">pawn.order.view.form</field>
+        <field name="model">pawn.order</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="0"/>
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <field name="date" />
+                        <field name="partner_id" />
+                        <field name="user_id" />
+                    </group>
+                    <notebook>
+                        <page name="order_lines" string="Order Lines">
+                            <field name="line_ids" mode="tree">
+                                <tree editable="1">
+                                    <field name="product_id" />
+                                    <field name="name" />
+                                    <field name="taxes_id" widget="many2many_tags"/>
+                                    <field name="price" />
+                                </tree>
+                            </field>
+                             <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total"/>
+                                    </div>
+                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
     <record id="pawn_pawn_action" model="ir.actions.act_window">
         <field name="name">Pawn</field>
@@ -94,6 +160,13 @@
         <field name="context">{'default_type': 'sale'}</field>
     </record>
 
+    <record id="pawn_order_action" model="ir.actions.act_window">
+        <field name="name">Order Pawn</field>
+        <field name="res_model">pawn.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pawn_order_view_tree"/>
+    </record>
+
     <menuitem
         id="pawn_root_menu"
         name="Pawn"
@@ -108,11 +181,18 @@
         sequence="10"/>
 
     <menuitem
+        id="pawn_order_submenu"
+        name="Pawn Orders"
+        action="pawn_order_action"
+        parent="pawn_root_menu"
+        sequence="12"/>
+
+    <menuitem
         id="pawn_sale_submenu"
         name="Sales"
         action="pawn_sale_action"
         parent="pawn_root_menu"
-        sequence="10"/>
+        sequence="15"/>
 
     </data>
 

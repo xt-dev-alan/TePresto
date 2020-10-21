@@ -14,6 +14,7 @@
         'data/product_data.xml',
         'data/ir_sequence_data.xml',
         'security/ir.model.access.csv',
-        'views/pawn_views.xml'
+        'views/pawn_views.xml',
+        'views/res_config_settings_views.xml'
     ]
 }
