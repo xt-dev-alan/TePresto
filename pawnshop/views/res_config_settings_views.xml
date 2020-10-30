@@ -8,6 +8,23 @@
             <field name="arch" type="xml">
                 <xpath expr="//div[hasclass('settings')]" position="inside">
                     <div class="app_settings_block" data-string="pawnshop" string="Pawnshop" data-key="pawnshop">
+                        <h2>Stock</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box" title="Picking type used for Pawn operations">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Picking Type
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Picking Type" for="default_picking_type_id" class="col-md-3 o_light_label"/>
+                                            <field name="default_picking_type_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <h2>Rates</h2>
                         <div class="row mt16 o_settings_container">
                             <div class="col-xs-12 col-md-6 o_setting_box" title="Rates used for pawnshop computed fields">
@@ -49,6 +66,14 @@
                                 </div>
                             </div>
                          </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     </div>
                 </xpath>
             </field>

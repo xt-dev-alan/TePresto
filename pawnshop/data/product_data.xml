@@ -2,14 +2,17 @@
     <data noupdate="1">
         <record id="product_costo_administracion" model="product.product">
             <field name="name">Costo Administración</field>
+            <field name="type">service</field>
         </record>
         
         <record id="product_costo_almacenamiento" model="product.product">
             <field name="name">Costo Almacenamiento</field>
+            <field name="type">service</field>
         </record>
         
         <record id="product_interes_prestamo" model="product.product">
             <field name="name">Interes del Prestamo</field>
+            <field name="type">service</field>
         </record>
 
         <record id="categ_empeño" model="product.category">

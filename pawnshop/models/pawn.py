@@ -2,7 +2,8 @@
 
 import logging
 
-from datetime import date
+from datetime import date, datetime
+from num2words import num2words
 
 from odoo import _, api, fields, models
 
@@ -153,8 +154,15 @@ class PawnOrder(models.Model):
 
     name = fields.Char(string='Name', required=True, readonly=True)
     date = fields.Date(string='Date', required=True, default=date.today())
+    date_due = fields.Date(string='Date', readonly=True)
     partner_id = fields.Many2one('res.partner', string='Partner')
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
+
+    company_id = fields.Many2one('res.company', string='Company', default=lambda s: s.env.company, required=True, readonly=True)
+    picking_type_id = fields.Many2one('stock.picking.type', string='Picking Type', required=True, readonly=True)
+    picking_id = fields.Many2one('stock.picking', string='Picking', readonly=True)
+
+    move_id = fields.Many2one('account.move', string='Invoice')
     currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
     note = fields.Text(string='Notes')
 
@@ -163,6 +171,77 @@ class PawnOrder(models.Model):
     amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all')
     amount_tax = fields.Monetary(string='Taxes', store=True, readonly=True, compute='_amount_all')
     amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_amount_all')
+
+
+    def create_invoice(self):
+        account_move = self.env['account.move']
+        for record in self:
+            lines = []
+            picking_id = record._prepare_picking()
+            moves = self._create_stock_moves(picking_id, record.line_ids)
+            moves._action_assign()
+
+            for l in record.line_ids:
+                lines.append( (0, 0, {
+                    'name': l.name, 
+                    'product_id': l.product_id.id,
+                    'tax_ids': [(6, 0, l.taxes_id.ids)],
+                    'price_unit': l.price,
+                    'quantity': 1.0
+                }) )
+
+            move_id = account_move.create( {
+                'partner_id': record.partner_id.id,
+                'invoice_line_ids': lines,
+                'invoice_date': record.date,
+                'invoice_origin': record.name,
+                'type': 'in_invoice',
+            } )
+            record.write( {'picking_id': picking_id.id, 'move_id': move_id.id} )
+
+
+
+    def _prepare_picking(self):
+        return self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id.id,
+            'partner_id': self.partner_id.id,
+            'date': datetime.now(),
+            'origin': self.name,
+            'location_dest_id': self.picking_type_id.default_location_dest_id.id,
+            'location_id': self.picking_type_id.default_location_src_id.id,
+            'company_id': self.company_id.id,
+        }) 
+		 
+
+
+    def _create_stock_moves(self, picking_id, lines):
+        """ Prepare the stock moves data for one order line. 
+        This function returns a recordset ready to be used.
+        """
+        moves = self.env['stock.move']
+        for line in lines:
+            if line.product_id.type not in ['product', 'consu']:
+                continue
+            values = {
+                'name': picking_id.origin,
+                'product_id': line.product_id.id,
+                'product_uom': line.product_id.uom_id.id,
+                'date': picking_id.date,
+                'date_expected': picking_id.date,
+                'location_id': picking_id.picking_type_id.default_location_src_id.id,
+                'location_dest_id': picking_id.picking_type_id.default_location_dest_id.id,
+                'product_uom_qty': 1.0,
+                'picking_id': picking_id.id,
+                'partner_id': picking_id.partner_id.id,
+                'state': 'draft',
+                'company_id': picking_id.company_id.id,
+                'picking_type_id': picking_id.picking_type_id.id,
+                'origin': picking_id.name,
+                'route_ids': picking_id.picking_type_id.warehouse_id and [(6, 0, [x.id for x in picking_id.picking_type_id.warehouse_id.route_ids])] or [],
+                'warehouse_id': picking_id.picking_type_id.warehouse_id.id,
+                }
+            moves |= moves.create(values)
+        return moves._action_confirm()
 
     @api.depends('line_ids.price_total')
     def _amount_all(self):
@@ -186,6 +265,20 @@ class PawnOrder(models.Model):
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('pawn.order') or _('New')
         result = super(PawnOrder, self).create(vals)
+        return result
+
+
+    def action_view_invoice(self):
+        '''
+        This function returns an action that display existing vendor bills of given purchase order ids.
+        When only one found, show the vendor bill immediately.
+        '''
+        action = self.env.ref('account.action_move_in_invoice_type')
+        result = action.read()[0]
+        res = self.env.ref('account.view_move_form', False)
+        form_view = [(res and res.id or False, 'form')]
+        result['views'] = form_view
+        result['res_id'] = self.move_id.id or False
         return result
 
 class PawnOrderLine(models.Model):

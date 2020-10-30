@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <template id="contract_template">
+          <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+              <t t-call="web.basic_layout">
+                <div class="page" style="font-family: Arial;">
+                  <span t-esc="'Contrato No. %s'%o.name"/>
+                  <p class="text-justify">
+                    En la ciudad de Tiquisate, el ONCE (<span t-esc="o.date.strftime('%d')"/>) de <span t-esc="o.date.strftime('%B')"/> del año <span t-esc="o.date.strftime('%Y')"/>, Nosotros, los abajo firmantes,
+comparecemos a celebrar CONTRATO DE CREDITO CON GARANTÍA MOBILIARIA de conformidad
+con las cláusulas siguientes: l. Manifiesta LA PARTE ACREEDORA, que otorga un crédito a favor del
+señor/a <span t-esc="o.partner_id.name.upper()"/>, por CIENTO TREINTA Y CINCO CON 00/100 QUETZALES
+(Q.135.00); suma que deberá ser reintegrada por la PARTE DEUDORA quien declara haberla
+recibido, por la cual se reconoce deudor de acuerdo a las condiciones y estipulaciones del
+presente contrato. ll: Los comparecientes acuerdan que el presente trato quedará sujeto a lo
+siguiente: ll.a) El plazo para el pago total de la obligación es de un mes calendario contado a partir
+de la fecha de firma del presente contrato; ll.b) Las partes acuerdan que el plazo del presente
+contrato y las obligaciones que conlleva, podrán ser prorrogados por períodos iguales mediante
+común acuerdo entre las partes, o bien si se da o cumple la siguiente condición: que la parte
+deudora se encuentre al día con el pago de los intereses, cargos y mora generados al finalizar el
+plazo original del contrato y no manifieste por escrito su deseo de dar por terminado el contrato.
+Dicha prórroga expresa no tendrá efecto, si la parte acreedora notificó previamente por escrito la
+resolución o el deseo de dar terminado el presente contrato al vencimiento del plazo. Dicho aviso
+previo deberá hacerlo con al menos 48 horas anticipación a la fecha de vencimiento de plazo. Se
+entenderá que se notifica por escrito, aquella notificación que se realice por cualquier vía o medio
+electrónico, que la parte acreedora pueda probar que efectivamente se realizó. ll.c) La parte
+deudora pagará el crédito mediante un (1) único pago a capital de CIENTO TREINTA Y CINCO CON
+00/100 QUETZALES (Q.135.00) al vencimiento del plazo. A partir del día siguiente al vencimiento
+del plazo sin haber realizado al menos el pago de interés y cargos, la parte deudora caerá en mora
+y se aplicará lo establecido en el numeral lll.a) inmediato posterior. Todo pago se realizará en
+Quetzales, sin necesidad de cobro ni requerimiento alguno, en la agencia de la parte acreedora
+donde se haya realizado la presente contratación, lugar que desde ya acepta la parte deudora que
+conoce. Las partes acuerdan la libertad de imputación de pagos por parte de la acreedora. lll.b En
+caso de mora, acuerdan las partes que se cobrará en concepto de interés moratorio el equivalente
+a una tasa del 18.00% mensual calculado sobre el monto total del crédito, el cual se calculará a
+partir del incumplimiento del pago de algunas de las cuotas a pagar. El mismo ser cobrará durante
+los quince (14) días siguientes al vencimiento del plazo, en cuyo caso a partir del décimo sexto (15)
+día posterior a vencido el plazo y en situación de incumplimiento, sin que se haya realizado el pago
+de los intereses y cargos adeudados a la fecha, la parte Acreedora podrá dar por terminado el
+presente contrato sin necesidad de declaración judicial y proceder de conformidad con lo
+establecido en la cláusula cuarta o quinta del presente acuerdo. ll.lV. Las partes expresamente
+acuerdan que la parte deudora podrá efectuar pagos anticipados a capital en cualquier momento
+dentro de la vigencia del presente acuerdo, pero esto no la eximirá de la obligación de pagar los
+intereses causados sobre la totalidad del capital que recibió en calidad de préstamos. ll.V. (ll.V.1)
+La parte deudora reconoce y se obliga a pagar una tasa de interés variable calculada sobre la base
+del saldo que exista al inicio del plazo que correrá a partir de la fecha de firma de presente
+contrato, que la parte deudora reconoce y pagará a la parte acreedora conforme a las normas
+siguientes: (a) La tasa de interés variable que por ahora se establece una tasa nominal del cuatro
+con 00/100 por ciento (3.00%) más el impuesto al Valor Agregado (IVA), mensual. (b) Los intereses
+causados por este crédito se liquidarán y pagarán mensualmente, dentro de cualquiera de los días
+del plazo del contrato, previo al vencimiento del mismo. (c) En cualquier momento, la parte
+
+acreedora podrá variar la tasa de interés, aumentando o disminuyendo la tasa de interés inicial, la
+que se ajustará automáticamente a partir de la fecha que estipula la correspondiente resolución
+de la parte acreedora. Dicha parte acreedora comunicará a la parte deudora, por cualquier medio
+escrito o de difusión que estime conveniente, cualquier variación de la tasa de interés aplicable a
+este contrato, la fecha en que se acordó tal variación, y la fecha en la que cobro o cobrará
+vigencia. (d) En caso que algún ente regulador o alguna entidad debidamente autoriza para el
+efecto estableciera tasas de intereses máximas para operaciones aquí previstas, se aplicaran las
+siguientes reglas: (d.i.) los intereses que devengara este contrato serán los interese máximos que
+fije la entidad autorizadas para estas operaciones, a menos que la parte acreedora decida cobrar
+una tasa menor: (d.ll) tal tasa variará automáticamente a partir de la fecha en que adquiera
+vigencia cualquier variación de la tasa máxima activa acordada por la entidad autorizada para el
+efecto o cuando, dentro de los límites legales, la parte acreedora así lo disponga; (d.iii.) se
+entiende que lo estipulado en este inciso se aplicará únicamente en el caso de que existan límites
+a la tasa de interés que la parte acreedora pueda cobrar en sus operaciones; (d.iv) en caso deje de
+aplicar lo antes mencionado, se volverá a lo dispuesto en los términos y condiciones aplicables del
+presente contrato; (ll.V.2) Acuerdan las partes que la parte acreedora cobrará los siguientes cargos
+a la parte deudora: (a) Manejo de Cuenta: Acuerdan las partes que en concepto de manejo de
+cuenta, la parte deudora pagará una cantidad equivalente al (7.50%) más el impuesto al Valor
+Agregado (IVA), calculado tomando como base el saldo que exista al inicio del plazo: (b) Resguardo
+de Garantía: Acuerdan las partes que en concepto de gastos relacionados al resguardo de la
+garantía que daba a sumir la parte acreedora relacionado con el presente contrato, la parte
+deudora pagará una cantidad equivalente al (7.50%) más el Impuesto al Valor Agregado (IVA),
+calculado tomando como base el saldo que exista al inicio del plazo. ll.Vl. Continúan manifestando
+los comparecientes que la parte acreedora podrá dar por vencido el plazo del contrato sin
+responsabilidad de su parte y exigir el Pago del capital adeudado, intereses, gastos, cargos y en su
+caso costas, así como cualquier obligación o pago adeudado conforme al presente contrato o
+incluso proceder de conformidad con la cláusula cuarta del presente contrato: (a) si la parte
+deudora dejare de pagar puntualmente, una sola mensualidad de intereses y/o recargos; o en
+caso, que al vencimiento del plazo, no cancele las amortizaciones de capital adeudadas; (b) en
+cualquier momento y de manera unilateral si se encuentra en mora por el pago de intereses o bien
+de alguna cuota de amortización; (c) si la parte deudora faltare al cumplimiento de cualquiera de
+las obligaciones que asume en este acto y las que establece la Ley, las cuales se tienen como
+incorporadas en este instrumento; (d) si la parte deudora fuere objeto de demanda, embargo,
+secuestro o intervención, si la garantía fuere anotada de demanda o de embargo, o si cesa en el
+pago de sus obligaciones o efectúa una cesión general a favor de sus acreedores, o si promueve
+concurso voluntario de acreedores o es objeto de concurso necesario de acreedores o quiebra, o si
+fuese declarada en quiebra. ll.Vll. La parte deudora autoriza a la parte acreedora para solicitar
+cualquier información de la misma a cualquier buró, sistema o equivalente. lll. El señor <span t-esc="o.partner_id.name.upper()"/>, en su calidad de parte deudora, declara por este medio que para
+garantizar el pago total y definitivo del monto total de las obligaciones adquiridas de conformidad
+con el presente contrato, por este medio constituye a favor de la parte acreedora. PRIMERA,
+UNICA y ESPECIAL garantía mobiliaria con posesión sobre el bien mueble descrito de conformidad
+con el ANEXO l del presente contrato, el cual consiste en un código de barras que identifica el
+bien; anexo para el cual la parte deudora ha confirmado los datos exactos y especificaciones del
+
+bien y por tanto procede a firmarlo en señal de aceptación formando el mismo parte integral del
+presente acuerdo y el cual sirve para identificar el bien dado en garantía. Manifiestan los
+comparecientes que el contrato de garantía mobiliaria surtirá efectos entre las partes y frente a
+terceros a partir de la firma del presente contrato y del traslado de posesión del bien mueble dado
+en garantía, que para los efectos del presente contrato la parte acreedora manifiesta que se tiene
+por recibido. Bien enterada de las penas relativas al delito de perjurio, bajo juramento manifiesta
+la parte deudora que es la actual, única y legítima propietaria, el bien mueble antes relacionado se
+encuentra libre de cualesquiera gravámenes, reclamos, cargos, prendas (con excepción de la
+garantía mobiliaria constituida mediante el presente instrumento), imposiciones, limitaciones,
+anotaciones, derechos de garantía de cualquier índole, o cualquier litigio o disputa pendiente que
+pudiera afectar los derechos de la parte acreedora. Acuerdan las partes de la garantía mobiliaria
+se sujetara a los siguientes términos y condiciones: (a) Plazo: la garantía mobiliaria se mantendrá
+vigentes mientras existan saldos pendientes de pago a cargo de la parte deudora a favor de la
+parte acreedora, producto de las obligaciones contenidas en el presente contrato; (b) Monto
+Máximo Garantizado: El bien mueble antes relacionado, sujeto a garantía mobiliaria, responderá
+hasta por el monto de capital del crédito identificado en las clausulas primera y segunda del
+presente contrato, así como por los interese que genere el capital adeudado (calculado como se
+establece en el presente contrato), los gastos por manejo de cuenta y resguardo de garantía,
+cargos, comisiones, daños y perjuicios que resulten del incumplimiento del presente contrato, o
+cualquier otra obligación de pago, cargo, interés o gastos que en virtud de la ley y de acuerdo a
+este contrato se cause como consecuencia del incumplimiento por parte del deudor. (c)
+Aceptación expresa de la garantía mobiliaria: Declara la parte acreedora que expresamente acepta
+la garantía mobiliaria constituida a favor. (d) Declaraciones y obligaciones de la parte deudora:
+Declara expresamente la parte deudora que: (l) salvo lo dispuesto en el presente contrato y a
+menos que se ejecute la adquisición en pago, no venderá, dará en prenda, gravará, transferirá,
+cederá, arrendará, dará en uso, usufructo o de otra forma dispondrá del bien mueble otorgado en
+garantía; (ii) No creara, incurrirá, asumirá ni permitirá que exista cualquier otro gravamen, cargo o
+imposición, directa o indirectamente, sobre el bien otorgado en garantía, sin la previa autorización
+por escrito de la parte Acreedora; (iii) La garantía mobiliaria creada en este documento incluye
+todo cuanto de hecho y por derecho le corresponde al bien dado en garantía; (iv) se obliga al pago
+de daños y perjuicios causado por el incumplimiento a lo dispuesto en el presente contrato. (e)
+Declaraciones obligaciones de la parte acreedora en posesión del bien dado en garantía:
+Corresponde al acreedor garantizado custodiar y preservar el bien dado en garantía; no utilizar los
+bienes en garantía; y responder hasta por el valor del monto del capital del presente crédito por
+los daños o perjuicios causados por su culpa o extravío del bien dado en garantía. Desde ya la
+parte deudora exime a la parte acreedora de cualquier obligación adicional respecto al bien dado
+en garantía y acepta como reparación total por dicho concepto en el monto mencionado
+anteriormente, motivo por el cual desde ya renuncia a cualquier tipo de acción o reclamación de
+índole civil, penal o administrativa que le pudiera corresponder; dándose por satisfecho y
+reparado todo daño o perjuicio con el monto de capital antes individualizado. En el evento que el
+bien dado en garantía sea uno que pueda almacenar datos u otro tipo de información, la parte
+acreedora lo tomará en garantía por el valor del mismo, excluyendo cualquier valor que puedan
+tener los datos o información que existan en dicho bien; eximiendo de responsabilidad desde ya a
+la parte acreedora por cualquier daño, sea total o parcial y/o extravío de datos y/o información
+
+confidencial y de cualquier otra naturaleza que pueda contener el bien dado en garantía; motivo
+por el cual la parte deudora desde ya ratifica la renuncia de derechos antes mencionada y exime
+de cualquier tipo responsabilidad a la parte acreedora, sus representantes, trabajadores y
+colaboradores por el acaecimiento del supuesto antes dicho. IV. Las partes convienen que en caso
+sede un incumplimiento de la parte deudora, la parte acreedora podrá iniciar la ejecución de la
+garantía mobiliaria optando por: A) Ejecución judicial, de conformidad con lo establecido en la ley
+de Garantías Mobiliarias; B) La ejecución voluntaria; ó C) ejercer el pacto Adquisición en pago.
+Pacto de Adquisición en pago: Acuerdan las partes expresamente en virtud del artículo 78 de la
+Ley de Garantías Mobiliarias, que en el evento de incumplimiento o terminación anticipada, la
+parte deudora faculta expresamente a la parte acreedora para proceder con la ADQUISICIÓN DE
+PAGO del bien mueble dado en garantía según la cláusula tercera del presente documento y
+descrito de conformidad con el ANEXO l del presente contrato. Podrá adquirir el bien dado en
+garantía en pago, de conformidad con lo siguiente: (i) En caso sede un incumplimiento de
+conformidad con lo pactado en el presente acuerdo, las partes aceptan y reconocen que la parte
+acreedora dará a la parte deudora un aviso mediante notificación en la dirección física consignada
+por el deudor garante o mediante mensaje de texto vía teléfono móvil al número que consigna el
+deudor garante o bien su correo electrónico; esto a elección del acreedor y; (ii) Dicho aviso,
+deberá consignar el requerimiento del pago, advirtiendo a la parte deudora, que en el evento que
+no se manifieste dentro de los 2 días calendario siguientes a la notificación, se procederá a ejercer
+el pacto de adquisición en pago y a trasladar el dominio del bien mueble dado en garantía. (iii)
+Para efectos de la presente cláusulas la parte deudora manifiesta que las direcciones físicas y de
+correo electrónico así como el número de teléfono móvil provistas al acreedor al momento de la
+contratación de este crédito, son ciertas y que al día de hoy le pertenecen y guarda íntima relación
+con ellas, motivo por el cual desde ya acepta como bien hechas todas aquellas citaciones,
+notificaciones y/o comunicaciones que en esos lugares se le realicen, reconociendo que en todo
+caso correrá a su cargo la carga de demostrar que las notificaciones que se le hicieron no se
+ajustaron a las disposiciones de este contrato. En caso la parte deudora cambie de dirección,
+número de teléfono móvil o correo electrónico, deberá notificar este hecho inmediatamente y por
+escrito a la parte acreedora; corriendo a su cargo la carga de demostrar que el aviso de cambio de
+dirección se dio con la debida antelación a la parte acreedora. De igual forma, la parte deudora
+acepta que en el negocio jurídico que por el presente acto celebra con la acreedora, aplicaran
+algunas disposiciones de conformidad con las políticas internas de la empresa, las cuales la parte
+deudora ACEPTA y DECLARA que conoce y conoció con debida antelación previo a la celebración
+del presente contrato; V. Las partes acuerdan que la acreedora queda facultada para ceder el
+presente acuerdo en cualquier caso y sin necesidad de autorización por parte de la parte deudora.
+VI. En los términos indicados, las partes ACEPTAN el contenido completo de este documento y que
+sus posteriores actualizaciones forman parte integral contrato. En las calidades con que actúan y
+bien enterados de su contenido, objeto, validez y efectos legales lo ratifican, aceptan y firman en
+señal de su conformidad.
+                  </p>
+                </div>
+              </t>
+            </t>
+          </t>
+        </template>
+    </data>
+</odoo>
