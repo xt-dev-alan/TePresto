@@ -24,7 +24,8 @@ class PawnPawn(models.Model):
     name = fields.Char(string='Name', required=True, default=_('New') )
     date = fields.Date(string='Date', default=date.today())
     approved_date = fields.Date(string='Approved')
-    order_id = fields.Many2one('pawn.order', string='Order')
+    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', default='monthly', required=True)
+    order_id = fields.Many2one('pawn.order', string='Order', readonly=True)
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
     state = fields.Selection(STATES, default='draft')
     type = fields.Selection([('pawn', 'Pawn'), ('sale', 'Sale')], string='Type', default='pawn', required=True)
@@ -32,6 +33,9 @@ class PawnPawn(models.Model):
     rate_loan = fields.Float(string="Rate Commision", )
     rate_stock = fields.Float(string="Rate Stock", )
     rate_admin = fields.Float(string="Rate Admin", )
+    rate_loan_week = fields.Float(string="Rate Commision", )
+    rate_stock_week = fields.Float(string="Rate Stock", )
+    rate_admin_week = fields.Float(string="Rate Admin", )
     amount_loan = fields.Float(string="Rate Commision", compute="_compute_rates", store=True)
     amount_stock = fields.Float(string="Rate Stock", compute="_compute_rates", store=True)
     amount_admin = fields.Float(string="Rate Admin", compute="_compute_rates", store=True)
@@ -50,7 +54,7 @@ class PawnPawn(models.Model):
     product_description = fields.Text(string="Product Description")
     product_search_ids = fields.One2many('pawn.product.search', 'pawn_id', string='Product search')
     
-    @api.depends('product_search_ids.amount')
+    @api.depends('product_search_ids.amount', 'term')
     def _compute_rates(self):
         for record in self:
             try:
@@ -59,9 +63,9 @@ class PawnPawn(models.Model):
                 amount = 0.0
             record.update({
                 'amount': amount,
-                'amount_loan': amount * ( record.rate_loan / 100.0),
-                'amount_stock': amount * ( record.rate_stock / 100.0),
-                'amount_admin': amount * ( record.rate_admin / 100.0),
+                'amount_loan': amount * ( record.rate_loan / 100.0 if record.term == 'monthly' else record.rate_loan_week / 100.0),
+                'amount_stock': amount * ( record.rate_stock / 100.0 if record.term == 'monthly' else record.rate_stock_week / 100.0),
+                'amount_admin': amount * ( record.rate_admin / 100.0 if record.term == 'monthly' else record.rate_admin_week / 100.0),
             })
 
     def _get_partner(self):
@@ -104,17 +108,13 @@ class PawnPawn(models.Model):
 
     def create_order(self):
         pawn_order = self.env['pawn.order']
-        storage = self.env.ref('pawnshop.product_costo_almacenamiento')
-        admin = self.env.ref('pawnshop.product_costo_administracion')
-        loan = self.env.ref('pawnshop.product_interes_prestamo')
         for record in self:
-            lines = [
-                (0, 0, {'name': storage.name, 'product_id': storage.id, 'price': record.amount_stock}),
-                (0, 0, {'name': admin.name, 'product_id': admin.id, 'price': record.amount_admin}),
-                (0, 0, {'name': loan.name, 'product_id': loan.id, 'price': record.amount_loan}),
-                (0, 0, {'name': record.product_id.name, 'product_id': record.product_id.id, 'price': record.amount})                
-                ]
-            order_id = pawn_order.create( {'partner_id': record.partner_id.id, 'line_ids': lines} )
+            order_id = pawn_order.create( {'partner_id': record.partner_id.id, 
+                                            'rate_loan': record.rate_loan,
+                                            'rate_stock': record.rate_stock,
+                                            'rate_admin': record.rate_admin,
+                                            'amount': record.amount
+                                            } )
             record.write(  {'order_id': order_id.id, 'state': 'progress'} )
 
 
@@ -166,39 +166,43 @@ class PawnOrder(models.Model):
     currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
     note = fields.Text(string='Notes')
 
-    line_ids = fields.One2many('pawn.order.line', 'order_id', string='Lines')
+    payment_ids = fields.One2many('pawn.payment', 'order_id', string='Payments', readonly=True)
 
-    amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all')
-    amount_tax = fields.Monetary(string='Taxes', store=True, readonly=True, compute='_amount_all')
-    amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_amount_all')
+    rate_loan = fields.Float(string="Rate Commision", readonly=True)
+    rate_stock = fields.Float(string="Rate Stock", readonly=True)
+    rate_admin = fields.Float(string="Rate Admin", readonly=True)
 
+    amount_loan = fields.Float(string="Amount Commision", store=True, compute="_compute_balance")
+    amount_stock = fields.Float(string="Amount Stock", store=True, compute="_compute_balance")
+    amount_admin = fields.Float(string="Amount Admin", store=True, compute="_compute_balance")
+    amount = fields.Monetary(string='Amount', readonly=True)
 
-    def create_invoice(self):
-        account_move = self.env['account.move']
+    interests = fields.Monetary(string='Interests', store=True, compute="_compute_balance")
+    balance = fields.Monetary(string='Balance', store=True, compute="_compute_balance")
+
+    @api.depends('amount', 'payment_ids.amount')
+    def _compute_balance(self):
         for record in self:
-            lines = []
+            payment_total = sum( record.payment_ids.mapped( lambda p: p.amount - p.interests ) )
+            balance = record.amount - payment_total
+            amount_loan = balance * (record.rate_loan / 100.0)
+            amount_stock = balance * (record.rate_stock / 100.0)
+            amount_admin = balance * (record.rate_admin/ 100.0)
+            record.update({
+                'amount_loan': amount_loan,
+                'amount_stock': amount_stock,
+                'amount_admin': amount_admin,
+                'interests': amount_loan + amount_stock + amount_admin,
+                'balance': balance
+            })
+            
+
+    def create_stock_move(self):
+        for record in self:
             picking_id = record._prepare_picking()
             moves = self._create_stock_moves(picking_id, record.line_ids)
             moves._action_assign()
-
-            for l in record.line_ids:
-                lines.append( (0, 0, {
-                    'name': l.name, 
-                    'product_id': l.product_id.id,
-                    'tax_ids': [(6, 0, l.taxes_id.ids)],
-                    'price_unit': l.price,
-                    'quantity': 1.0
-                }) )
-
-            move_id = account_move.create( {
-                'partner_id': record.partner_id.id,
-                'invoice_line_ids': lines,
-                'invoice_date': record.date,
-                'invoice_origin': record.name,
-                'type': 'in_invoice',
-            } )
             record.write( {'picking_id': picking_id.id, 'move_id': move_id.id} )
-
 
 
     def _prepare_picking(self):
@@ -243,22 +247,6 @@ class PawnOrder(models.Model):
             moves |= moves.create(values)
         return moves._action_confirm()
 
-    @api.depends('line_ids.price_total')
-    def _amount_all(self):
-        """
-        Compute the total amounts of the SO.
-        """
-        for order in self:
-            amount_untaxed = amount_tax = 0.0
-            for line in order.line_ids:
-                amount_untaxed += line.price_subtotal
-                amount_tax += line.price_tax
-            order.update({
-                'amount_untaxed': amount_untaxed,
-                'amount_tax': amount_tax,
-                'amount_total': amount_untaxed + amount_tax,
-            })
-
 
     @api.model
     def create(self, vals):
@@ -281,40 +269,16 @@ class PawnOrder(models.Model):
         result['res_id'] = self.move_id.id or False
         return result
 
-class PawnOrderLine(models.Model):
 
-    _name = 'pawn.order.line'
-    _description = 'Pawn order line'
+class PawnPayment(models.Model):
+    _name = 'pawn.payment'
+    _description = 'Pawn Payment'
 
-
-    name = fields.Char(string='Description', required=True)
-    product_id = fields.Many2one('product.product', string='Product', required=True)
-    taxes_id = fields.Many2many('account.tax', string='Taxes')
-    price = fields.Monetary(string='Price', required=True)
+    move_id = fields.Many2one('account.move', string='Move')
+    amount = fields.Monetary(string='Amount')
     order_id = fields.Many2one('pawn.order', string='Order')
+    interests = fields.Monetary(string='Interests')
     currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
 
-    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', readonly=True, store=True)
-    price_tax = fields.Float(compute='_compute_amount', string='Total Tax', readonly=True, store=True)
-    price_total = fields.Monetary(compute='_compute_amount', string='Total', readonly=True, store=True)
-
-    @api.depends('price', 'taxes_id')
-    def _compute_amount(self):
-        """
-        Compute the amounts of the pawn order line.
-        """
-        for line in self:
-            taxes = line.taxes_id.compute_all(line.price, line.currency_id, 1.0, product=line.product_id, partner=line.order_id.partner_id)
-            line.update({
-                'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
-                'price_total': taxes['total_included'],
-                'price_subtotal': taxes['total_excluded'],
-            })
-
-
-
-
-
-    
 
     

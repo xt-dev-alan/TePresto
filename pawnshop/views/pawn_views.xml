@@ -33,10 +33,11 @@
                             </h1>
                         </div>
                         <group col="4">
-                            <field name="date" />
-                            <field name="user_id" />
+                            <field name="date" invisible="1"/>
+                            <field name="user_id" invisible="1"/>
                             <field name="amount" />
                             <field name="type" />
+                            <field name="term" />
                             <field name="order_id" />
                             <field name="approved_date" states="accept"/>
                         </group>
@@ -101,7 +102,7 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button string="Create Invoice" name="create_invoice" type="object" class="oe_highlight"/>
+                    <button string="Create Payment" name="%(pawnshop.pawn_create_payment_action)d" type="action" class="oe_highlight"/>
                 </header>
                 <sheet>
                 <div class="oe_button_box" name="button_box">
@@ -120,14 +121,18 @@
                         <field name="user_id" />
                         <field name="move_id" invisble="1"/>
                     </group>
+                    <group col="6">
+                        <field name="rate_loan" />
+                        <field name="rate_stock" />
+                        <field name="rate_admin" />
+                    </group>
                     <notebook>
-                        <page name="order_lines" string="Order Lines">
-                            <field name="line_ids" mode="tree">
+                        <page name="order_lines" string="Payment Lines">
+                            <field name="payment_ids" mode="tree">
                                 <tree editable="1">
-                                    <field name="product_id" />
-                                    <field name="name" />
-                                    <field name="taxes_id" widget="many2many_tags"/>
-                                    <field name="price" />
+                                    <field name="move_id" readonly="1"/>
+                                    <field name="amount" />
+                                    <field name="order_id" invisible="1"/>
                                 </tree>
                             </field>
                              <group name="note_group" col="6">
@@ -135,12 +140,21 @@
                                     <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
                                 </group>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_loan" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_stock" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_admin" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                        <label for="amount_total"/>
+                                        <label for="interests"/>
                                     </div>
-                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="interests" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount"/>
+                                    </div>
+                                    <field name="amount" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="balance"/>
+                                    </div>
+                                    <field name="balance" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 </group>
                                 <div class="oe_clear"/>
                             </group>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="pawn_create_payment_view_form" model="ir.ui.view">
+            <field name="name">pawn.create.payment.view.form</field>
+            <field name="model">pawn.create.payment</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <group>
+                        <field name="amount_loan" />
+                        <field name="amount_stock" />
+                        <field name="amount_admin" />
+                        <field name="interests" />
+                        <field name="amount" />
+                    </group>
+                    <footer>
+                        <button string="Create Payment" name="create_payment" type="object" class="oe_highlight"/> o
+                        <button string="Cancel" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="pawn_create_payment_action"
+            name="Pawn Create Payment"
+            binding_model="pawn.order"
+            res_model="pawn.create.payment"
+            view_mode="form"
+            target="new"/>
+    </data>
+
+</odoo>

@@ -31,7 +31,7 @@
                                 <div class="o_setting_left_pane"/>
                                 <div class="o_setting_right_pane">
                                     <div class="text-muted">
-                                        Default Rate Loan
+                                        Default Monthly Rate Loan
                                     </div>
                                     <div class="content-group">
                                         <div class="row mt16">
@@ -43,7 +43,7 @@
                                 <div class="o_setting_left_pane"/>
                                 <div class="o_setting_right_pane">
                                     <div class="text-muted">
-                                        Default Rate Stock
+                                        Default Monthly Rate Stock
                                     </div>
                                     <div class="content-group">
                                         <div class="row mt16">
@@ -55,12 +55,50 @@
                                 <div class="o_setting_left_pane"/>
                                 <div class="o_setting_right_pane">
                                     <div class="text-muted">
-                                        Default Rate Admin
+                                        Default Monthly Rate Admin
                                     </div>
                                     <div class="content-group">
                                         <div class="row mt16">
                                             <label string="Rate Admin" for="default_rate_admin" class="col-md-3 o_light_label"/>
                                             <field name="default_rate_admin"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box" title="Rates used for pawnshop computed fields">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Weekly Rate Loan
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Loan" for="default_rate_loan_week" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_loan_week"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Weekly Stock
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Stock" for="default_rate_stock_week" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_stock_week"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Weekly Rate Admin
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Admin" for="default_rate_admin_week" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_admin_week"/>
                                         </div>
                                     </div>
                                 </div>
