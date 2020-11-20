@@ -2,17 +2,19 @@
 
 import logging
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from num2words import num2words
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
 STATES = [
-    ('draft', 'draft'), 
+    ('draft', 'Draft'), 
     ('accept', 'Accepted'), 
     ('progress', 'Progress'),
+    ('arrear', 'Arrear'),
     ('close', 'Close')
 ]
 
@@ -22,9 +24,9 @@ class PawnPawn(models.Model):
     _description = 'Pawn'
 
     name = fields.Char(string='Name', required=True, default=_('New') )
-    date = fields.Date(string='Date', default=date.today())
     approved_date = fields.Date(string='Approved')
-    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', default='monthly', required=True)
+    due_date = fields.Date(string='Due Date', readonly=True)
+    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', required=True)
     order_id = fields.Many2one('pawn.order', string='Order', readonly=True)
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
     state = fields.Selection(STATES, default='draft')
@@ -51,14 +53,16 @@ class PawnPawn(models.Model):
 
     product_name = fields.Char(string='Product Name', required=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
+    categ_id = fields.Many2one('product.category', string='Category', required=True)
     product_description = fields.Text(string="Product Description")
     product_search_ids = fields.One2many('pawn.product.search', 'pawn_id', string='Product search')
     
-    @api.depends('product_search_ids.amount', 'term')
+    @api.depends('product_search_ids.amount', 'term', 'categ_id')
     def _compute_rates(self):
         for record in self:
             try:
-                amount = sum( record.product_search_ids.mapped('amount') ) / len( record.product_search_ids )
+                average = sum( record.product_search_ids.mapped('amount') ) / len( record.product_search_ids )
+                amount = average * (record.categ_id.pawn_rate / 100)
             except:
                 amount = 0.0
             record.update({
@@ -81,13 +85,12 @@ class PawnPawn(models.Model):
 
     def _create_product(self):
         product = self.env['product.product']
-        categ_id = self.env.ref('pawnshop.categ_empeño')
         product_id = product.create( {  'name': self.product_name, 
                                         'default_code': self.name,
                                         'barcode': self.name,
                                         'list_price': self.amount,
                                         'type': 'product',
-                                        'categ_id': categ_id.id
+                                        'categ_id': self.categ_id.id
                                     } )
         return product_id
 
@@ -95,11 +98,17 @@ class PawnPawn(models.Model):
         for record in self:
             partner_id = record._get_partner()
             product_id = record._create_product()
+            approved_date = date.today() 
+            days = 8 if record.term == 'weekly' else 30
+            due_date = approved_date + timedelta(days=days)
+            if len(record.product_search_ids) < 2:
+                raise ValidationError(_('Error. You must add at least two lines'))
             record.write( {
                             'state': 'accept',
                             'partner_id': partner_id.id,
                             'product_id': product_id.id,
-                            'approved_date': date.today(),
+                            'approved_date': approved_date,
+                            'due_date': due_date,
                             'street': partner_id.street,
                             'city': partner_id.city,
                             'phone': partner_id.phone,
@@ -109,7 +118,9 @@ class PawnPawn(models.Model):
     def create_order(self):
         pawn_order = self.env['pawn.order']
         for record in self:
-            order_id = pawn_order.create( {'partner_id': record.partner_id.id, 
+            order_id = pawn_order.create( {
+                                            'partner_id': record.partner_id.id,
+                                            'term': record.term, 
                                             'rate_loan': record.rate_loan,
                                             'rate_stock': record.rate_stock,
                                             'rate_admin': record.rate_admin,
@@ -154,7 +165,7 @@ class PawnOrder(models.Model):
 
     name = fields.Char(string='Name', required=True, readonly=True)
     date = fields.Date(string='Date', required=True, default=date.today())
-    date_due = fields.Date(string='Date', readonly=True)
+    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', readonly=True)
     partner_id = fields.Many2one('res.partner', string='Partner')
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
 

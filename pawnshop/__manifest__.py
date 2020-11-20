@@ -18,6 +18,7 @@
         'security/ir.model.access.csv',
         'wizard/pawn_create_payment.xml',
         'views/pawn_views.xml',
+        'views/product_views.xml',
         'views/contract_template.xml',
         'views/ir_actions_report.xml',
         'views/res_config_settings_views.xml',

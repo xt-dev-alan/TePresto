@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from datetime import date
+from datetime import date, timedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -36,9 +36,11 @@ class PawnCreatePayment(models.TransientModel):
         order_id = self.env['pawn.order'].browse( self.env.context.get('active_id') )
         account_move = self.env['account.move']
         pawn_payment = self.env['pawn.payment']
+        pawn = self.env['pawn.pawn']
         storage = self.env.ref('pawnshop.product_costo_almacenamiento')
         admin = self.env.ref('pawnshop.product_costo_administracion')
         loan = self.env.ref('pawnshop.product_interes_prestamo')
+        msg = ''
 
         if self.amount < self.interests:
             raise UserError(_('the payment must be made greater than or equal to the interest'))
@@ -50,16 +52,18 @@ class PawnCreatePayment(models.TransientModel):
         ]
 
         if self.amount > self.interests:
-            lines.append(
-                (0, 0, {'name': 'CAPITAL', 'price_unit': self.amount - self.interests}),
-            )
-
+            msg = 'Se abonaron %s %s al CAPITAL'%(self.amount - self.interests, self.currency_id.symbol)
+            pawn_id = pawn.search( [('order_id', '=', order_id.id)] )
+            days = 8 if pawn_id.term == 'weekly' else 30
+            pawn_id.write( {'due_date': date.today() + timedelta(days=days)} )
+        
         move_id = account_move.create( {
             'partner_id': order_id.partner_id.id,
             'invoice_line_ids': lines,
             'invoice_date': date.today(),
             'invoice_origin': order_id.name,
             'type': 'in_invoice',
+            'narration': msg
         } )
         move_id.post()
         pawn_payment.create({

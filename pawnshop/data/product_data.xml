@@ -15,9 +15,5 @@
             <field name="type">service</field>
         </record>
 
-        <record id="categ_empeño" model="product.category">
-            <field name="name">Empeño</field>
-        </record>
-
     </data>
 </odoo>
