@@ -21,6 +21,7 @@ class PawnCreatePayment(models.TransientModel):
             'amount_loan': order_id.amount_loan,
             'amount_stock': order_id.amount_stock,
             'amount_admin': order_id.amount_admin,
+            'amount_arrear': order_id.amount_arrear,
             'interests': order_id.interests,
         })
         return res
@@ -29,6 +30,7 @@ class PawnCreatePayment(models.TransientModel):
     amount_loan = fields.Float(string="Amount Commision", readonly=True)
     amount_stock = fields.Float(string="Amount Stock", readonly=True)
     amount_admin = fields.Float(string="Amount Admin", readonly=True)
+    amount_arrear = fields.Float(string="Amount Arrear", readonly=True)
     interests = fields.Monetary(string='Interests', readonly=True)
     currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
 
@@ -40,6 +42,7 @@ class PawnCreatePayment(models.TransientModel):
         storage = self.env.ref('pawnshop.product_costo_almacenamiento')
         admin = self.env.ref('pawnshop.product_costo_administracion')
         loan = self.env.ref('pawnshop.product_interes_prestamo')
+        arrear = self.env.ref('pawnshop.product_interes_mora')
         msg = ''
 
         if self.amount < self.interests:
@@ -51,11 +54,16 @@ class PawnCreatePayment(models.TransientModel):
             (0, 0, {'name': loan.name, 'product_id': loan.id, 'price_unit': self.amount_loan}),
         ]
 
+        if record.amount_arrear:
+            lines.append(
+                (0, 0, {'name': arrear.name, 'product_id': arrear.id, 'price_unit': self.amount_arrear}),
+            )
+
         if self.amount > self.interests:
             msg = 'Se abonaron %s %s al CAPITAL'%(self.amount - self.interests, self.currency_id.symbol)
             pawn_id = pawn.search( [('order_id', '=', order_id.id)] )
             days = 8 if pawn_id.term == 'weekly' else 30
-            pawn_id.write( {'due_date': date.today() + timedelta(days=days)} )
+            pawn_id.write( {'due_date': date.today() + timedelta(days=days), 'state': 'progress'} )
         
         move_id = account_move.create( {
             'partner_id': order_id.partner_id.id,

@@ -64,6 +64,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Monthly Rate Arrear
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Arrear" for="default_rate_arrear" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_arrear"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-xs-12 col-md-6 o_setting_box" title="Rates used for pawnshop computed fields">
                                 <div class="o_setting_left_pane"/>
@@ -99,6 +112,19 @@
                                         <div class="row mt16">
                                             <label string="Rate Admin" for="default_rate_admin_week" class="col-md-3 o_light_label"/>
                                             <field name="default_rate_admin_week"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <div class="text-muted">
+                                        Default Weekly Rate Arrear
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Rate Arrear" for="default_rate_arrear_week" class="col-md-3 o_light_label"/>
+                                            <field name="default_rate_arrear_week"/>
                                         </div>
                                     </div>
                                 </div>

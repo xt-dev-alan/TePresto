@@ -35,9 +35,11 @@ class PawnPawn(models.Model):
     rate_loan = fields.Float(string="Rate Commision", )
     rate_stock = fields.Float(string="Rate Stock", )
     rate_admin = fields.Float(string="Rate Admin", )
+    rate_arrear = fields.Float(string="Rate Arrear", )
     rate_loan_week = fields.Float(string="Rate Commision", )
     rate_stock_week = fields.Float(string="Rate Stock", )
     rate_admin_week = fields.Float(string="Rate Admin", )
+    rate_arrear_week = fields.Float(string="Rate Arrear", )
     amount_loan = fields.Float(string="Rate Commision", compute="_compute_rates", store=True)
     amount_stock = fields.Float(string="Rate Stock", compute="_compute_rates", store=True)
     amount_admin = fields.Float(string="Rate Admin", compute="_compute_rates", store=True)
@@ -82,6 +84,16 @@ class PawnPawn(models.Model):
                                             'type': 'contact'} )
         return partner_id
 
+    def action_arrears(self):
+        for record in self:
+            if record.state == 'arrear':
+                record.order_id.create_stock_move()
+                record.write( {'state': 'close'} )
+            else:
+                rate_arrear = record.rate_arrear_week if record.term == 'week' else record.rate_arrear 
+                record.order_id.write( {'rate_arrear': rate_arrear } )
+                days = 4 if record.term == 'weekly' else 8
+                record.write( {'due_date': date.today() + timedelta(days=days), 'state': 'arrear'} )
 
     def _create_product(self):
         product = self.env['product.product']
@@ -182,16 +194,18 @@ class PawnOrder(models.Model):
     rate_loan = fields.Float(string="Rate Commision", readonly=True)
     rate_stock = fields.Float(string="Rate Stock", readonly=True)
     rate_admin = fields.Float(string="Rate Admin", readonly=True)
+    rate_arrear = fields.Float(string="Rate Admin", readonly=True)
 
     amount_loan = fields.Float(string="Amount Commision", store=True, compute="_compute_balance")
     amount_stock = fields.Float(string="Amount Stock", store=True, compute="_compute_balance")
     amount_admin = fields.Float(string="Amount Admin", store=True, compute="_compute_balance")
+    amount_arrear = fields.Float(string="Amount Arrear", store=True, compute="_compute_balance")
     amount = fields.Monetary(string='Amount', readonly=True)
 
     interests = fields.Monetary(string='Interests', store=True, compute="_compute_balance")
     balance = fields.Monetary(string='Balance', store=True, compute="_compute_balance")
 
-    @api.depends('amount', 'payment_ids.amount')
+    @api.depends('amount', 'payment_ids.amount', 'rate_arrear')
     def _compute_balance(self):
         for record in self:
             payment_total = sum( record.payment_ids.mapped( lambda p: p.amount - p.interests ) )
@@ -199,11 +213,13 @@ class PawnOrder(models.Model):
             amount_loan = balance * (record.rate_loan / 100.0)
             amount_stock = balance * (record.rate_stock / 100.0)
             amount_admin = balance * (record.rate_admin/ 100.0)
+            amount_arrear = balance * (record.rate_arrear/ 100.0)
             record.update({
                 'amount_loan': amount_loan,
                 'amount_stock': amount_stock,
                 'amount_admin': amount_admin,
-                'interests': amount_loan + amount_stock + amount_admin,
+                'amount_arrear': amount_arrear,
+                'interests': amount_loan + amount_stock + amount_admin + amount_arrear,
                 'balance': balance
             })
             
@@ -227,7 +243,6 @@ class PawnOrder(models.Model):
             'company_id': self.company_id.id,
         }) 
 		 
-
 
     def _create_stock_moves(self, picking_id, lines):
         """ Prepare the stock moves data for one order line. 

@@ -23,7 +23,7 @@
             <field name="arch" type="xml">
                 <form string="">
                     <header>
-                        <field name="state" widget="statusbar"/>
+                        <field name="state" widget="statusbar" clickable="1"/>
                         <button string="Accept" name="action_accept" type="object" class="oe_highlight" states="draft"/>
                         <button string="Create Order" name="create_order" type="object" class="oe_highlight" states="accept"/>
                     </header>
@@ -127,6 +127,7 @@
                         <field name="rate_loan" />
                         <field name="rate_stock" />
                         <field name="rate_admin" />
+                        <field name="rate_arrear" attrs="{'invisible': [('rate_arrear', '=', 0.0)]}"/>
                     </group>
                     <notebook>
                         <page name="order_lines" string="Payment Lines">
@@ -145,6 +146,7 @@
                                     <field name="amount_loan" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <field name="amount_stock" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <field name="amount_admin" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_arrear" widget="monetary" options="{'currency_field': 'currency_id'}"  attrs="{'invisible': [('rate_arrear', '=', 0.0)]}"/>
                                     <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                         <label for="interests"/>
                                     </div>

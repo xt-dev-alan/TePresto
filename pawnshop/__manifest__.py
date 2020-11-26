@@ -12,6 +12,7 @@
         'account'
     ],
     'data': [
+        'data/ir_cron_data.xml',
         'data/product_data.xml',
         'data/ir_sequence_data.xml',
         'data/stock_data.xml',

@@ -11,6 +11,7 @@
                         <field name="amount_loan" />
                         <field name="amount_stock" />
                         <field name="amount_admin" />
+                        <field name="amount_arrear" />
                         <field name="interests" />
                         <field name="amount" />
                     </group>
