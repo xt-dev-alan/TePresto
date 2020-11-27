@@ -185,7 +185,6 @@ class PawnOrder(models.Model):
     picking_type_id = fields.Many2one('stock.picking.type', string='Picking Type', required=True, readonly=True)
     picking_id = fields.Many2one('stock.picking', string='Picking', readonly=True)
 
-    move_id = fields.Many2one('account.move', string='Invoice')
     currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
     note = fields.Text(string='Notes')
 
@@ -194,7 +193,7 @@ class PawnOrder(models.Model):
     rate_loan = fields.Float(string="Rate Commision", readonly=True)
     rate_stock = fields.Float(string="Rate Stock", readonly=True)
     rate_admin = fields.Float(string="Rate Admin", readonly=True)
-    rate_arrear = fields.Float(string="Rate Admin", readonly=True)
+    rate_arrear = fields.Float(string="Rate Arrear", readonly=True)
 
     amount_loan = fields.Float(string="Amount Commision", store=True, compute="_compute_balance")
     amount_stock = fields.Float(string="Amount Stock", store=True, compute="_compute_balance")
@@ -225,11 +224,13 @@ class PawnOrder(models.Model):
             
 
     def create_stock_move(self):
+        pawn = self.env['pawn.pawn']
         for record in self:
+            pawn_id = pawn.search([('order_id', '=', record.id)])
             picking_id = record._prepare_picking()
-            moves = self._create_stock_moves(picking_id, record.line_ids)
+            moves = self._create_stock_moves(picking_id, pawn_id.product_id)
             moves._action_assign()
-            record.write( {'picking_id': picking_id.id, 'move_id': move_id.id} )
+            record.write( {'picking_id': picking_id.id} )
 
 
     def _prepare_picking(self):
@@ -244,33 +245,32 @@ class PawnOrder(models.Model):
         }) 
 		 
 
-    def _create_stock_moves(self, picking_id, lines):
-        """ Prepare the stock moves data for one order line. 
-        This function returns a recordset ready to be used.
+    def _create_stock_moves(self, picking_id, product_id):
+        """ Prepare the stock moves data. This function
+        returns a recordset ready to be used.
         """
         moves = self.env['stock.move']
-        for line in lines:
-            if line.product_id.type not in ['product', 'consu']:
-                continue
-            values = {
-                'name': picking_id.origin,
-                'product_id': line.product_id.id,
-                'product_uom': line.product_id.uom_id.id,
-                'date': picking_id.date,
-                'date_expected': picking_id.date,
-                'location_id': picking_id.picking_type_id.default_location_src_id.id,
-                'location_dest_id': picking_id.picking_type_id.default_location_dest_id.id,
-                'product_uom_qty': 1.0,
-                'picking_id': picking_id.id,
-                'partner_id': picking_id.partner_id.id,
-                'state': 'draft',
-                'company_id': picking_id.company_id.id,
-                'picking_type_id': picking_id.picking_type_id.id,
-                'origin': picking_id.name,
-                'route_ids': picking_id.picking_type_id.warehouse_id and [(6, 0, [x.id for x in picking_id.picking_type_id.warehouse_id.route_ids])] or [],
-                'warehouse_id': picking_id.picking_type_id.warehouse_id.id,
-                }
-            moves |= moves.create(values)
+        if product_id.type not in ['product', 'consu']:
+            return moves
+        values = {
+            'name': picking_id.origin,
+            'product_id': product_id.id,
+            'product_uom': product_id.uom_id.id,
+            'date': picking_id.date,
+            'date_expected': picking_id.date,
+            'location_id': picking_id.picking_type_id.default_location_src_id.id,
+            'location_dest_id': picking_id.picking_type_id.default_location_dest_id.id,
+            'product_uom_qty': 1.0,
+            'picking_id': picking_id.id,
+            'partner_id': picking_id.partner_id.id,
+            'state': 'draft',
+            'company_id': picking_id.company_id.id,
+            'picking_type_id': picking_id.picking_type_id.id,
+            'origin': picking_id.name,
+            'route_ids': picking_id.picking_type_id.warehouse_id and [(6, 0, [x.id for x in picking_id.picking_type_id.warehouse_id.route_ids])] or [],
+            'warehouse_id': picking_id.picking_type_id.warehouse_id.id,
+            }
+        moves |= moves.create(values)
         return moves._action_confirm()
 
 

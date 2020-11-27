@@ -6,7 +6,7 @@
             <field name="name">Pawnshop: In arrears</field>
             <field name="model_id" ref="model_pawn_pawn"/>
             <field name="state">code</field>
-            <field name="code">records = model.search([('state', 'in', ('progress', 'arrear')), ('due_date', '!=', False)]).filtered(lambda r: r.due_date &lt; (datetime.date.today() + datetime.timedelta(days= 8 if r.term == 'week' else 30)))
+            <field name="code">records = model.search([('state', 'in', ('progress', 'arrear')), ('due_date', '!=', False)]).filtered(lambda r: r.due_date &lt; datetime.date.today() )
 records.action_arrears()</field>
             <field name="user_id" ref="base.user_root" />
             <field name="interval_number">2</field>

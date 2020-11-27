@@ -54,7 +54,7 @@ class PawnCreatePayment(models.TransientModel):
             (0, 0, {'name': loan.name, 'product_id': loan.id, 'price_unit': self.amount_loan}),
         ]
 
-        if record.amount_arrear:
+        if self.amount_arrear:
             lines.append(
                 (0, 0, {'name': arrear.name, 'product_id': arrear.id, 'price_unit': self.amount_arrear}),
             )
@@ -63,6 +63,7 @@ class PawnCreatePayment(models.TransientModel):
             msg = 'Se abonaron %s %s al CAPITAL'%(self.amount - self.interests, self.currency_id.symbol)
             pawn_id = pawn.search( [('order_id', '=', order_id.id)] )
             days = 8 if pawn_id.term == 'weekly' else 30
+            order_id.write( {'rate_arrear': 0.0} )
             pawn_id.write( {'due_date': date.today() + timedelta(days=days), 'state': 'progress'} )
         
         move_id = account_move.create( {
