@@ -15,10 +15,18 @@ STATES = [
     ('accept', 'Accepted'), 
     ('progress', 'Progress'),
     ('arrear', 'Arrear'),
-    ('close', 'Close')
+    ('close', 'Close'),
+    ('expired', 'Expired'),
+    
 ]
 
-class PawnPawn(models.Model):
+PICKING_TYPE = {
+    'accept': 'picking_type_pawn',
+    'close': 'picking_type_pawn_out',
+    'expired': 'picking_type_pawn_in',
+}
+
+class PawnPawn(models.Model):  
     _name = 'pawn.pawn'
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin']
     _description = 'Pawn'
@@ -26,9 +34,14 @@ class PawnPawn(models.Model):
     name = fields.Char(string='Name', required=True, default=_('New') )
     approved_date = fields.Date(string='Approved')
     due_date = fields.Date(string='Due Date', readonly=True)
+    company_id = fields.Many2one('res.company', string='Company', default=lambda s: s.env.user.company_id.id)
     term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', required=True)
     order_id = fields.Many2one('pawn.order', string='Order', readonly=True)
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
+    
+    picking_ids = fields.One2many('stock.picking', 'pawn_id', string='Picking', readonly=True)
+    delivery_count = fields.Integer(string='Delivery Orders', compute='_compute_picking_ids')
+
     state = fields.Selection(STATES, default='draft')
     type = fields.Selection([('pawn', 'Pawn'), ('sale', 'Sale')], string='Type', default='pawn', required=True)
     currency_id = fields.Many2one('res.currency', string='Currency', default=lambda s: s.env.company.currency_id )
@@ -87,8 +100,8 @@ class PawnPawn(models.Model):
     def action_arrears(self):
         for record in self:
             if record.state == 'arrear':
-                record.order_id.create_stock_move()
-                record.write( {'state': 'close'} )
+                record.write( {'state': 'expired'} )
+                record.create_stock_move()
             else:
                 rate_arrear = record.rate_arrear_week if record.term == 'week' else record.rate_arrear 
                 record.order_id.write( {'rate_arrear': rate_arrear } )
@@ -125,7 +138,12 @@ class PawnPawn(models.Model):
                             'city': partner_id.city,
                             'phone': partner_id.phone,
                         } )
+            record.create_stock_move()
         
+    def action_close(self):
+        for record in self:
+            record.write( {'state': 'close'} )
+            record.create_stock_move()
 
     def create_order(self):
         pawn_order = self.env['pawn.order']
@@ -140,110 +158,27 @@ class PawnPawn(models.Model):
                                             } )
             record.write(  {'order_id': order_id.id, 'state': 'progress'} )
 
-
-
-    @api.onchange('street', 'city', 'phone')
-    def _onchange_partner(self):
-        if not self.partner_id:
-            return
-        self.partner_id.street = self.street
-        self.partner_id.city = self.city
-        self.partner_id.phone = self.phone
-
-
-    @api.model
-    def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('pawn.pawn') or _('New')
-        result = super(PawnPawn, self).create(vals)
-        return result
-
-
-class PawnProductSearch(models.Model):
-    _name = 'pawn.product.search'
-    _description = 'Pawn Product Search'
-
-    name = fields.Char(string='Name', required=True)
-    currency_id = fields.Many2one('res.currency', string='Currency', default=lambda s: s.env.company.currency_id )
-    attachment = fields.Binary(string='Attachment')
-    amount = fields.Monetary(string='Amount', required=True)
-    pawn_id = fields.Many2one('pawn.pawn', string='Pawn')
-
-
-class PawnOrder(models.Model):
-
-    _name = 'pawn.order'
-    _description = 'Pawn order'
-
-    name = fields.Char(string='Name', required=True, readonly=True)
-    date = fields.Date(string='Date', required=True, default=date.today())
-    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', readonly=True)
-    partner_id = fields.Many2one('res.partner', string='Partner')
-    user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
-
-    company_id = fields.Many2one('res.company', string='Company', default=lambda s: s.env.company, required=True, readonly=True)
-    picking_type_id = fields.Many2one('stock.picking.type', string='Picking Type', required=True, readonly=True)
-    picking_id = fields.Many2one('stock.picking', string='Picking', readonly=True)
-
-    currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
-    note = fields.Text(string='Notes')
-
-    payment_ids = fields.One2many('pawn.payment', 'order_id', string='Payments', readonly=True)
-
-    rate_loan = fields.Float(string="Rate Commision", readonly=True)
-    rate_stock = fields.Float(string="Rate Stock", readonly=True)
-    rate_admin = fields.Float(string="Rate Admin", readonly=True)
-    rate_arrear = fields.Float(string="Rate Arrear", readonly=True)
-
-    amount_loan = fields.Float(string="Amount Commision", store=True, compute="_compute_balance")
-    amount_stock = fields.Float(string="Amount Stock", store=True, compute="_compute_balance")
-    amount_admin = fields.Float(string="Amount Admin", store=True, compute="_compute_balance")
-    amount_arrear = fields.Float(string="Amount Arrear", store=True, compute="_compute_balance")
-    amount = fields.Monetary(string='Amount', readonly=True)
-
-    interests = fields.Monetary(string='Interests', store=True, compute="_compute_balance")
-    balance = fields.Monetary(string='Balance', store=True, compute="_compute_balance")
-
-    @api.depends('amount', 'payment_ids.amount', 'rate_arrear')
-    def _compute_balance(self):
-        for record in self:
-            payment_total = sum( record.payment_ids.mapped( lambda p: p.amount - p.interests ) )
-            balance = record.amount - payment_total
-            amount_loan = balance * (record.rate_loan / 100.0)
-            amount_stock = balance * (record.rate_stock / 100.0)
-            amount_admin = balance * (record.rate_admin/ 100.0)
-            amount_arrear = balance * (record.rate_arrear/ 100.0)
-            record.update({
-                'amount_loan': amount_loan,
-                'amount_stock': amount_stock,
-                'amount_admin': amount_admin,
-                'amount_arrear': amount_arrear,
-                'interests': amount_loan + amount_stock + amount_admin + amount_arrear,
-                'balance': balance
-            })
-            
-
     def create_stock_move(self):
-        pawn = self.env['pawn.pawn']
         for record in self:
-            pawn_id = pawn.search([('order_id', '=', record.id)])
-            picking_id = record._prepare_picking()
-            moves = self._create_stock_moves(picking_id, pawn_id.product_id)
-            moves._action_assign()
-            record.write( {'picking_id': picking_id.id} )
+            if record.state in ['accept', 'close', 'expired']:
+                picking_type_id = self.env.ref('pawnshop.%s'% PICKING_TYPE[record.state])
+                picking_id = record._prepare_picking( picking_type_id )
+                moves = self._create_stock_moves(picking_id, record.product_id)
+                moves._action_assign()
 
 
-    def _prepare_picking(self):
+    def _prepare_picking(self, picking_type_id):
         return self.env['stock.picking'].create({
-            'picking_type_id': self.picking_type_id.id,
+            'picking_type_id': picking_type_id.id,
             'partner_id': self.partner_id.id,
             'date': datetime.now(),
+            'pawn_id': self.id,
             'origin': self.name,
-            'location_dest_id': self.picking_type_id.default_location_dest_id.id,
-            'location_id': self.picking_type_id.default_location_src_id.id,
-            'company_id': self.company_id.id,
+            'location_dest_id': picking_type_id.default_location_dest_id.id,
+            'location_id': picking_type_id.default_location_src_id.id,
+            'company_id': self.env.user.company_id.id,
         }) 
-		 
+
 
     def _create_stock_moves(self, picking_id, product_id):
         """ Prepare the stock moves data. This function
@@ -274,6 +209,116 @@ class PawnOrder(models.Model):
         return moves._action_confirm()
 
 
+    @api.onchange('street', 'city', 'phone')
+    def _onchange_partner(self):
+        if not self.partner_id:
+            return
+        self.partner_id.street = self.street
+        self.partner_id.city = self.city
+        self.partner_id.phone = self.phone
+
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', _('New')) == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('pawn.pawn') or _('New')
+        result = super(PawnPawn, self).create(vals)
+        return result
+
+    
+    @api.depends('picking_ids')
+    def _compute_picking_ids(self):
+        for order in self:
+            order.delivery_count = len(order.picking_ids)
+
+    def action_view_delivery(self):
+        '''
+        This function returns an action that display existing delivery orders
+        of given sales order ids. It can either be a in a list or in a form
+        view, if there is only one delivery order to show.
+        '''
+        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+
+        pickings = self.mapped('picking_ids')
+        if len(pickings) > 1:
+            action['domain'] = [('id', 'in', pickings.ids)]
+        elif pickings:
+            form_view = [(self.env.ref('stock.view_picking_form').id, 'form')]
+            if 'views' in action:
+                action['views'] = form_view + [(state,view) for state,view in action['views'] if view != 'form']
+            else:
+                action['views'] = form_view
+            action['res_id'] = pickings.id
+        # Prepare the context.
+        action['context'] = dict(self._context, default_partner_id=self.partner_id.id, default_origin=self.name)
+        return action
+
+class PawnProductSearch(models.Model):
+    _name = 'pawn.product.search'
+    _description = 'Pawn Product Search'
+
+    name = fields.Char(string='Name', required=True)
+    currency_id = fields.Many2one('res.currency', string='Currency', default=lambda s: s.env.company.currency_id )
+    attachment = fields.Binary(string='Attachment')
+    amount = fields.Monetary(string='Amount', required=True)
+    pawn_id = fields.Many2one('pawn.pawn', string='Pawn')
+
+
+class PawnOrder(models.Model):
+
+    _name = 'pawn.order'
+    _description = 'Pawn order'
+
+    name = fields.Char(string='Name', required=True, readonly=True)
+    date = fields.Date(string='Date', required=True, default=date.today())
+    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', readonly=True)
+    partner_id = fields.Many2one('res.partner', string='Partner')
+    user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
+
+    company_id = fields.Many2one('res.company', string='Company', default=lambda s: s.env.company, required=True, readonly=True)
+
+    currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
+    note = fields.Text(string='Notes')
+
+    payment_ids = fields.One2many('pawn.payment', 'order_id', string='Payments', readonly=True)
+
+    rate_loan = fields.Float(string="Rate Commision", readonly=True)
+    rate_stock = fields.Float(string="Rate Stock", readonly=True)
+    rate_admin = fields.Float(string="Rate Admin", readonly=True)
+    rate_arrear = fields.Float(string="Rate Arrear", readonly=True)
+
+    amount_loan = fields.Float(string="Amount Commision", store=True, compute="_compute_balance")
+    amount_stock = fields.Float(string="Amount Stock", store=True, compute="_compute_balance")
+    amount_admin = fields.Float(string="Amount Admin", store=True, compute="_compute_balance")
+    amount_arrear = fields.Float(string="Amount Arrear", store=True, compute="_compute_balance")
+    amount = fields.Monetary(string='Amount', readonly=True)
+
+    interests = fields.Monetary(string='Interests', store=True, compute="_compute_balance")
+    balance = fields.Monetary(string='Balance', store=True, compute="_compute_balance")
+
+    @api.depends('amount', 'payment_ids.amount', 'rate_arrear')
+    def _compute_balance(self):
+        pawn = self.env['pawn.pawn']
+        for record in self:
+            payment_total = sum( record.payment_ids.mapped( lambda p: p.amount - p.interests ) )
+            balance = record.amount - payment_total
+            if not balance:
+                pawn_id = pawn.search([('order_id', '=', record.id)], limit=1)
+                _logger.info( pawn_id )
+                pawn_id.action_close()
+            amount_loan = balance * (record.rate_loan / 100.0)
+            amount_stock = balance * (record.rate_stock / 100.0)
+            amount_admin = balance * (record.rate_admin/ 100.0)
+            amount_arrear = balance * (record.rate_arrear/ 100.0)
+            record.update({
+                'amount_loan': amount_loan,
+                'amount_stock': amount_stock,
+                'amount_admin': amount_admin,
+                'amount_arrear': amount_arrear,
+                'interests': amount_loan + amount_stock + amount_admin + amount_arrear,
+                'balance': balance
+            })
+            
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
