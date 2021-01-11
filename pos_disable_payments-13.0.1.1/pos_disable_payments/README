@@ -1,0 +1,8 @@
+
+Version 13.0.1.0 : (24/01/20)
+		- Add pos access rights functionality in employee.
+		- Solve the issue of disable payment when customer change.
+
+Version 13.0.1.0 : (17/06/20)
+		- Correct the assignment of "qty" and "disc" event.
+		- Restrict user by removing orderline if he has no access. 
