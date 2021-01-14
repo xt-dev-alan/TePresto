@@ -15,8 +15,6 @@ class ResConfigSettings(models.TransientModel):
     default_rate_admin_week = fields.Float(string="Rate Admin", default_model="pawn.pawn")
     default_rate_arrear_week = fields.Float(string="Rate Arrear", default_model="pawn.pawn")
 
-    default_picking_type_id = fields.Many2one('stock.picking.type', string='Picking Type', default_model="pawn.order")
-
     
 
     
