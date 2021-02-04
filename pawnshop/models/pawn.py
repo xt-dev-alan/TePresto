@@ -123,13 +123,17 @@ class PawnPawn(models.Model):
         for record in self:
             partner_id = record._get_partner()
             product_id = record._create_product()
-            approved_date = date.today() 
-            days = 8 if record.term == 'weekly' else 30
-            due_date = approved_date + timedelta(days=days)
+            approved_date = date.today()
             if len(record.product_search_ids) < 2:
                 raise ValidationError(_('Error. You must add at least two lines'))
+            
+            if record.type == 'pawn': 
+                days = 8 if record.term == 'weekly' else 30
+                due_date = approved_date + timedelta(days=days)
+            else:
+                due_date = approved_date
             record.write( {
-                            'state': 'accept',
+                            'state': 'accept' if record.type == 'pawn' else 'close',
                             'partner_id': partner_id.id,
                             'product_id': product_id.id,
                             'approved_date': approved_date,
@@ -138,7 +142,7 @@ class PawnPawn(models.Model):
                             'city': partner_id.city,
                             'phone': partner_id.phone,
                         } )
-            record.create_stock_move()
+            record.create_stock_move(type=record.type)
         
     def action_close(self):
         for record in self:
@@ -158,10 +162,12 @@ class PawnPawn(models.Model):
                                             } )
             record.write(  {'order_id': order_id.id, 'state': 'progress'} )
 
-    def create_stock_move(self):
+    def create_stock_move(self,type=False):
         for record in self:
             if record.state in ['accept', 'close', 'expired']:
                 picking_type_id = self.env.ref('pawnshop.%s'% PICKING_TYPE[record.state])
+                if type == 'sale':
+                    picking_type_id = self.env.ref('stock.picking_type_in')
                 picking_id = record._prepare_picking( picking_type_id )
                 moves = self._create_stock_moves(picking_id, record.product_id)
                 moves._action_assign()
