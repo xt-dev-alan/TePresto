@@ -707,7 +707,7 @@ msgstr "RUT Cliente"
 #: model:ir.model.fields.selection,name:pawnshop.selection__pawn_pawn__type__pawn
 #: model:ir.ui.menu,name:pawnshop.pawn_root_menu
 msgid "Pawn"
-msgstr "Casa de Empeño"
+msgstr "Empeño"
 
 #. module: pawnshop
 #: model:ir.actions.act_window,name:pawnshop.pawn_create_payment_action

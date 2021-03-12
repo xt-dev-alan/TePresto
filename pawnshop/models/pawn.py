@@ -6,7 +6,7 @@ from datetime import date, datetime, timedelta
 from num2words import num2words
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ class PawnPawn(models.Model):
     delivery_count = fields.Integer(string='Delivery Orders', compute='_compute_picking_ids')
 
     state = fields.Selection(STATES, default='draft')
-    type = fields.Selection([('pawn', 'Pawn'), ('sale', 'Sale')], string='Type', default='pawn', required=True)
+    type = fields.Selection([('pawn', 'Pawn'), ('purchase', 'Purchase')], string='Type', default='pawn')
     currency_id = fields.Many2one('res.currency', string='Currency', default=lambda s: s.env.company.currency_id )
     rate_loan = fields.Float(string="Rate Commision", )
     rate_stock = fields.Float(string="Rate Stock", )
@@ -57,11 +57,10 @@ class PawnPawn(models.Model):
     amount_stock = fields.Float(string="Rate Stock", compute="_compute_rates", store=True)
     amount_admin = fields.Float(string="Rate Admin", compute="_compute_rates", store=True)
     amount = fields.Monetary(string='Amount', compute="_compute_rates", store=True)
+    replace_amount = fields.Monetary(string='Replace Amount')
 
 
-    partner_name = fields.Char(string='Partner Name', required=True)
-    partner_vat = fields.Char(string='Partner Vat', required=True)
-    partner_id = fields.Many2one('res.partner', string='Partner', readonly=True)
+    partner_id = fields.Many2one('res.partner', string='Partner', required=True)
     street = fields.Char()
     city = fields.Char()
     phone = fields.Char()
@@ -72,7 +71,7 @@ class PawnPawn(models.Model):
     product_description = fields.Text(string="Product Description")
     product_search_ids = fields.One2many('pawn.product.search', 'pawn_id', string='Product search')
     
-    @api.depends('product_search_ids.amount', 'term', 'categ_id')
+    @api.depends('product_search_ids.amount', 'term', 'categ_id', 'replace_amount')
     def _compute_rates(self):
         for record in self:
             try:
@@ -80,6 +79,8 @@ class PawnPawn(models.Model):
                 amount = average * (record.categ_id.pawn_rate / 100)
             except:
                 amount = 0.0
+            if record.replace_amount:
+                amount = record.replace_amount
             record.update({
                 'amount': amount,
                 'amount_loan': amount * ( record.rate_loan / 100.0 if record.term == 'monthly' else record.rate_loan_week / 100.0),
@@ -87,20 +88,12 @@ class PawnPawn(models.Model):
                 'amount_admin': amount * ( record.rate_admin / 100.0 if record.term == 'monthly' else record.rate_admin_week / 100.0),
             })
 
-    def _get_partner(self):
-        partner = self.env['res.partner']
-        partner_id = partner.search( [('vat', '=', self.partner_vat)], limit=1)
-        if not partner_id:
-            partner_id = partner.create(  {
-                                            'name': self.partner_name, 
-                                            'vat': self.partner_vat,
-                                            'type': 'contact'} )
-        return partner_id
 
     def action_arrears(self):
         for record in self:
             if record.state == 'arrear':
                 record.write( {'state': 'expired'} )
+                record.product_id.write({'available_in_pos': True})
                 record.create_stock_move()
             else:
                 rate_arrear = record.rate_arrear_week if record.term == 'week' else record.rate_arrear 
@@ -121,7 +114,6 @@ class PawnPawn(models.Model):
 
     def action_accept(self):
         for record in self:
-            partner_id = record._get_partner()
             product_id = record._create_product()
             approved_date = date.today()
             if len(record.product_search_ids) < 2:
@@ -134,13 +126,13 @@ class PawnPawn(models.Model):
                 due_date = approved_date
             record.write( {
                             'state': 'accept' if record.type == 'pawn' else 'close',
-                            'partner_id': partner_id.id,
+                            'partner_id': record.partner_id.id,
                             'product_id': product_id.id,
                             'approved_date': approved_date,
                             'due_date': due_date,
-                            'street': partner_id.street,
-                            'city': partner_id.city,
-                            'phone': partner_id.phone,
+                            'street': record.partner_id.street,
+                            'city': record.partner_id.city,
+                            'phone': record.partner_id.phone,
                         } )
             record.create_stock_move(type=record.type)
         
@@ -154,7 +146,9 @@ class PawnPawn(models.Model):
         for record in self:
             order_id = pawn_order.create( {
                                             'partner_id': record.partner_id.id,
-                                            'term': record.term, 
+                                            'term': record.term,
+                                            'product_id': record.product_id.id, 
+                                            'pawn_id': record.id,
                                             'rate_loan': record.rate_loan,
                                             'rate_stock': record.rate_stock,
                                             'rate_admin': record.rate_admin,
@@ -166,7 +160,7 @@ class PawnPawn(models.Model):
         for record in self:
             if record.state in ['accept', 'close', 'expired']:
                 picking_type_id = self.env.ref('pawnshop.%s'% PICKING_TYPE[record.state])
-                if type == 'sale':
+                if type == 'purchase':
                     picking_type_id = self.env.ref('stock.picking_type_in')
                 picking_id = record._prepare_picking( picking_type_id )
                 moves = self._create_stock_moves(picking_id, record.product_id)
@@ -280,7 +274,9 @@ class PawnOrder(models.Model):
     term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', readonly=True)
     partner_id = fields.Many2one('res.partner', string='Partner')
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
+    pawn_id = fields.Many2one('pawn.pawn', string="Pawn", readonly=1)
 
+    product_id = fields.Many2one('product.product', string='Product', readonly=True)
     company_id = fields.Many2one('res.company', string='Company', default=lambda s: s.env.company, required=True, readonly=True)
 
     currency_id = fields.Many2one('res.currency', string='', default=lambda s: s.env.company.currency_id)
@@ -346,6 +342,11 @@ class PawnOrder(models.Model):
         result['res_id'] = self.move_id.id or False
         return result
 
+    def unlink(self):
+        for order in self:
+            if order.pawn_id.state != 'draft':
+                raise UserError(_('Error. '))
+        return super(PawnOrder, self).unlink()
 
 class PawnPayment(models.Model):
     _name = 'pawn.payment'

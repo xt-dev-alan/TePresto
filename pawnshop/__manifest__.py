@@ -9,7 +9,9 @@
     'depends': [
         'sale_management',
         'stock',
-        'account'
+        'account',
+        'point_of_sale'
+        
     ],
     'data': [
         'data/ir_cron_data.xml',

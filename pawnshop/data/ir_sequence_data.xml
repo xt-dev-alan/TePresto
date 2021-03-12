@@ -2,6 +2,14 @@
 <odoo>
 
     <data>
+
+        <record id="seq_pawn_partner" model="ir.sequence">
+            <field name="name">Partners</field>
+            <field name="code">pawn.partner</field>
+            <field name="prefix">PPA</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
     
         <record id="seq_pawn_pawn" model="ir.sequence">
             <field name="name">Pawns</field>

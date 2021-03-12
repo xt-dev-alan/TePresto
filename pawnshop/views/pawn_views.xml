@@ -46,25 +46,24 @@
                         </div>
                         <group col="4">
                             <field name="type" />
-                            <field name="term" />
+                            <field name="term" attrs="{'invisible': [('type', '!=', 'pawn')]}"/>
                             <field name="order_id" />
                             <field name="currency_id" invisible="1"/>
                             <field name="amount" />
+                            <field name="replace_amount" />
                             <field name="approved_date" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             <field name="due_date" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             <field name="user_id" invisible="1"/>
                         </group>
                         <group col="4" name="Partner" string="Partner">
-                            <field name="partner_name" states="draft"/>
-                            <field name="partner_vat" states="draft"/>
-                            <field name="partner_id" states="accept,progress,close"/>
+                            <field name="partner_id"/>
                             <field name="street" states="accept,progress,close"/>
                             <field name="city" states="accept,progress,close"/>
                             <field name="phone" states="accept,progress,close"/>
                         </group>
                         <group col="4" name="Product" string="Product">
                             <field name="product_name" />
-                            <field name="categ_id" />
+                            <field name="categ_id" domain="[('parent_id', '!=', False)]"/>
                             <field name="product_description" />
                             <field name="product_id" />
                         </group>
@@ -127,6 +126,7 @@
                     <group col="4">
                         <field name="date" />
                         <field name="partner_id" />
+                        <field name="product_id" />
                         <field name="term" />
                         <field name="user_id" />
                         <field name="currency_id" invisible="1"/>
@@ -204,6 +204,13 @@
         <field name="view_id" ref="pawn_order_view_tree"/>
     </record>
 
+    <record model="ir.actions.act_window" id="location_open_quants_pawn"> <!-- Used in location -->
+        <field name="context">{'search_default_productgroup': 1}</field>
+        <field name="domain">[('location_id', '=', 1)]</field>
+        <field name="name">Current Stock</field>
+        <field name="res_model">stock.quant</field>
+    </record>
+
     <menuitem
         id="pawn_root_menu"
         name="Pawn"
@@ -230,6 +237,15 @@
         action="pawn_sale_action"
         parent="pawn_root_menu"
         sequence="15"/>
+    
+    <menuitem
+        id="pawn_stock_submenu"
+        name="Stock"
+        action="location_open_quants_pawn"
+        parent="pawn_root_menu"
+        sequence="18"/>
+
+        
 
     </data>
 
