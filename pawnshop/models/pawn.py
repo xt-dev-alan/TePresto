@@ -88,7 +88,6 @@ class PawnPawn(models.Model):
                 'amount_admin': amount * ( record.rate_admin / 100.0 if record.term == 'monthly' else record.rate_admin_week / 100.0),
             })
 
-
     def action_arrears(self):
         for record in self:
             if record.state == 'arrear':
@@ -166,7 +165,6 @@ class PawnPawn(models.Model):
                 moves = self._create_stock_moves(picking_id, record.product_id)
                 moves._action_assign()
 
-
     def _prepare_picking(self, picking_type_id):
         return self.env['stock.picking'].create({
             'picking_type_id': picking_type_id.id,
@@ -178,7 +176,6 @@ class PawnPawn(models.Model):
             'location_id': picking_type_id.default_location_src_id.id,
             'company_id': self.env.user.company_id.id,
         }) 
-
 
     def _create_stock_moves(self, picking_id, product_id):
         """ Prepare the stock moves data. This function
@@ -208,7 +205,6 @@ class PawnPawn(models.Model):
         moves |= moves.create(values)
         return moves._action_confirm()
 
-
     @api.onchange('street', 'city', 'phone')
     def _onchange_partner(self):
         if not self.partner_id:
@@ -217,7 +213,6 @@ class PawnPawn(models.Model):
         self.partner_id.city = self.city
         self.partner_id.phone = self.phone
 
-
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
@@ -225,7 +220,6 @@ class PawnPawn(models.Model):
         result = super(PawnPawn, self).create(vals)
         return result
 
-    
     @api.depends('picking_ids')
     def _compute_picking_ids(self):
         for order in self:
@@ -252,6 +246,9 @@ class PawnPawn(models.Model):
         # Prepare the context.
         action['context'] = dict(self._context, default_partner_id=self.partner_id.id, default_origin=self.name)
         return action
+
+    def _get_num2words(self, value):
+        return num2words( value, lang='es')
 
 class PawnProductSearch(models.Model):
     _name = 'pawn.product.search'
