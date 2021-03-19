@@ -35,7 +35,7 @@ class PawnPawn(models.Model):
     approved_date = fields.Date(string='Approved')
     due_date = fields.Date(string='Due Date', readonly=True)
     company_id = fields.Many2one('res.company', string='Company', default=lambda s: s.env.user.company_id.id)
-    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term', required=True)
+    term = fields.Selection([('weekly', 'Weekly'), ('monthly', 'Monthly')], string='Term')
     order_id = fields.Many2one('pawn.order', string='Order', readonly=True)
     user_id = fields.Many2one('res.users', string='User', default=lambda s: s.env.user)
     

@@ -46,11 +46,11 @@
                         </div>
                         <group col="4">
                             <field name="type" />
-                            <field name="term" attrs="{'invisible': [('type', '!=', 'pawn')]}"/>
+                            <field name="term" attrs="{'invisible': [('type', '!=', 'pawn')], 'required': [('type', '=', 'pawn')],}"/>
                             <field name="order_id" />
                             <field name="currency_id" invisible="1"/>
                             <field name="amount" />
-                            <field name="replace_amount" />
+                            <field name="replace_amount" groups="pawnshop.pawnshop_manager_group"/>
                             <field name="approved_date" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             <field name="due_date" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             <field name="user_id" invisible="1"/>

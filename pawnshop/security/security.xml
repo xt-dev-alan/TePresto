@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="pawnshop_manager_group" model="res.groups">
+            <field name="name">Pawnshop Manager</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+    
+    </data>
+    
+
+</odoo>

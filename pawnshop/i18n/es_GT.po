@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0-20201026\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 22:57+0000\n"
-"PO-Revision-Date: 2021-02-17 22:57+0000\n"
+"POT-Creation-Date: 2021-03-19 18:54+0000\n"
+"PO-Revision-Date: 2021-03-19 18:54+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,196 +17,212 @@ msgstr ""
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"%) más el Impuesto al Valor Agregado (IVA),\n"
+"                    calculado tomando como base el saldo que exista al inicio del plazo. ll.Vl. Continúan manifestando\n"
+"                    los comparecientes que la parte acreedora podrá dar por vencido el plazo del contrato sin\n"
+"                    responsabilidad de su parte y exigir el Pago del capital adeudado, intereses, gastos, cargos y en su\n"
+"                    caso costas, así como cualquier obligación o pago adeudado conforme al presente contrato o\n"
+"                    incluso proceder de conformidad con la cláusula cuarta del presente contrato: (a) si la parte\n"
+"                    deudora dejare de pagar puntualmente, una sola mensualidad de intereses y/o recargos; o en\n"
+"                    caso, que al vencimiento del plazo, no cancele las amortizaciones de capital adeudadas; (b) en\n"
+"                    cualquier momento y de manera unilateral si se encuentra en mora por el pago de intereses o bien\n"
+"                    de alguna cuota de amortización; (c) si la parte deudora faltare al cumplimiento de cualquiera de\n"
+"                    las obligaciones que asume en este acto y las que establece la Ley, las cuales se tienen como\n"
+"                    incorporadas en este instrumento; (d) si la parte deudora fuere objeto de demanda, embargo,\n"
+"                    secuestro o intervención, si la garantía fuere anotada de demanda o de embargo, o si cesa en el\n"
+"                    pago de sus obligaciones o efectúa una cesión general a favor de sus acreedores, o si promueve\n"
+"                    concurso voluntario de acreedores o es objeto de concurso necesario de acreedores o quiebra, o si\n"
+"                    fuese declarada en quiebra. ll.Vll. La parte deudora autoriza a la parte acreedora para solicitar\n"
+"                    cualquier información de la misma a cualquier buró, sistema o equivalente. lll. El señor"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"%) más el impuesto al Valor\n"
+"                    Agregado (IVA), calculado tomando como base el saldo que exista al inicio del plazo: (b) Resguardo\n"
+"                    de Garantía: Acuerdan las partes que en concepto de gastos relacionados al resguardo de la\n"
+"                    garantía que daba a sumir la parte acreedora relacionado con el presente contrato, la parte\n"
+"                    deudora pagará una cantidad equivalente al ("
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"%) más el impuesto al Valor Agregado (IVA), mensual. (b) Los intereses\n"
+"                    causados por este crédito se liquidarán y pagarán mensualmente, dentro de cualquiera de los días\n"
+"                    del plazo del contrato, previo al vencimiento del mismo. (c) En cualquier momento, la parte\n"
+"\n"
+"                    acreedora podrá variar la tasa de interés, aumentando o disminuyendo la tasa de interés inicial, la\n"
+"                    que se ajustará automáticamente a partir de la fecha que estipula la correspondiente resolución\n"
+"                    de la parte acreedora. Dicha parte acreedora comunicará a la parte deudora, por cualquier medio\n"
+"                    escrito o de difusión que estime conveniente, cualquier variación de la tasa de interés aplicable a\n"
+"                    este contrato, la fecha en que se acordó tal variación, y la fecha en la que cobro o cobrará\n"
+"                    vigencia. (d) En caso que algún ente regulador o alguna entidad debidamente autoriza para el\n"
+"                    efecto estableciera tasas de intereses máximas para operaciones aquí previstas, se aplicaran las\n"
+"                    siguientes reglas: (d.i.) los intereses que devengara este contrato serán los interese máximos que\n"
+"                    fije la entidad autorizadas para estas operaciones, a menos que la parte acreedora decida cobrar\n"
+"                    una tasa menor: (d.ll) tal tasa variará automáticamente a partir de la fecha en que adquiera\n"
+"                    vigencia cualquier variación de la tasa máxima activa acordada por la entidad autorizada para el\n"
+"                    efecto o cuando, dentro de los límites legales, la parte acreedora así lo disponga; (d.iii.) se\n"
+"                    entiende que lo estipulado en este inciso se aplicará únicamente en el caso de que existan límites\n"
+"                    a la tasa de interés que la parte acreedora pueda cobrar en sus operaciones; (d.iv) en caso deje de\n"
+"                    aplicar lo antes mencionado, se volverá a lo dispuesto en los términos y condiciones aplicables del\n"
+"                    presente contrato; (ll.V.2) Acuerdan las partes que la parte acreedora cobrará los siguientes cargos\n"
+"                    a la parte deudora: (a) Manejo de Cuenta: Acuerdan las partes que en concepto de manejo de\n"
+"                    cuenta, la parte deudora pagará una cantidad equivalente al ("
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+") al vencimiento del plazo. A partir del día siguiente al vencimiento\n"
+"                    del plazo sin haber realizado al menos el pago de interés y cargos, la parte deudora caerá en mora\n"
+"                    y se aplicará lo establecido en el numeral lll.a) inmediato posterior. Todo pago se realizará en\n"
+"                    Quetzales, sin necesidad de cobro ni requerimiento alguno, en la agencia de la parte acreedora\n"
+"                    donde se haya realizado la presente contratación, lugar que desde ya acepta la parte deudora que\n"
+"                    conoce. Las partes acuerdan la libertad de imputación de pagos por parte de la acreedora. lll.b En\n"
+"                    caso de mora, acuerdan las partes que se cobrará en concepto de interés moratorio el equivalente\n"
+"                    a una tasa del"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
 msgid ") de"
 msgstr ""
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
 msgid ""
+"); suma que deberá ser reintegrada por la PARTE DEUDORA quien declara haberla\n"
+"                    recibido, por la cual se reconoce deudor de acuerdo a las condiciones y estipulaciones del\n"
+"                    presente contrato. ll: Los comparecientes acuerdan que el presente trato quedará sujeto a lo\n"
+"                    siguiente: ll.a) El plazo para el pago total de la obligación es de"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
 ", Nosotros, los abajo firmantes,\n"
-"comparecemos a celebrar CONTRATO DE CREDITO CON GARANTÍA MOBILIARIA de conformidad\n"
-"con las cláusulas siguientes: l. Manifiesta LA PARTE ACREEDORA, que otorga un crédito a favor del\n"
-"señor/a"
+"                    comparecemos a celebrar CONTRATO DE CREDITO CON GARANTÍA MOBILIARIA de conformidad\n"
+"                    con las cláusulas siguientes: l. Manifiesta LA PARTE ACREEDORA, que otorga un crédito a favor del\n"
+"                    señor/a"
 msgstr ""
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
 msgid ""
 ", en su calidad de parte deudora, declara por este medio que para\n"
-"garantizar el pago total y definitivo del monto total de las obligaciones adquiridas de conformidad\n"
-"con el presente contrato, por este medio constituye a favor de la parte acreedora. PRIMERA,\n"
-"UNICA y ESPECIAL garantía mobiliaria con posesión sobre el bien mueble descrito de conformidad\n"
-"con el ANEXO l del presente contrato, el cual consiste en un código de barras que identifica el\n"
-"bien; anexo para el cual la parte deudora ha confirmado los datos exactos y especificaciones del\n"
+"                    garantizar el pago total y definitivo del monto total de las obligaciones adquiridas de conformidad\n"
+"                    con el presente contrato, por este medio constituye a favor de la parte acreedora. PRIMERA,\n"
+"                    UNICA y ESPECIAL garantía mobiliaria con posesión sobre el bien mueble descrito de conformidad\n"
+"                    con el ANEXO l del presente contrato, el cual consiste en un código de barras que identifica el\n"
+"                    bien; anexo para el cual la parte deudora ha confirmado los datos exactos y especificaciones del\n"
 "\n"
-"bien y por tanto procede a firmarlo en señal de aceptación formando el mismo parte integral del\n"
-"presente acuerdo y el cual sirve para identificar el bien dado en garantía. Manifiestan los\n"
-"comparecientes que el contrato de garantía mobiliaria surtirá efectos entre las partes y frente a\n"
-"terceros a partir de la firma del presente contrato y del traslado de posesión del bien mueble dado\n"
-"en garantía, que para los efectos del presente contrato la parte acreedora manifiesta que se tiene\n"
-"por recibido. Bien enterada de las penas relativas al delito de perjurio, bajo juramento manifiesta\n"
-"la parte deudora que es la actual, única y legítima propietaria, el bien mueble antes relacionado se\n"
-"encuentra libre de cualesquiera gravámenes, reclamos, cargos, prendas (con excepción de la\n"
-"garantía mobiliaria constituida mediante el presente instrumento), imposiciones, limitaciones,\n"
-"anotaciones, derechos de garantía de cualquier índole, o cualquier litigio o disputa pendiente que\n"
-"pudiera afectar los derechos de la parte acreedora. Acuerdan las partes de la garantía mobiliaria\n"
-"se sujetara a los siguientes términos y condiciones: (a) Plazo: la garantía mobiliaria se mantendrá\n"
-"vigentes mientras existan saldos pendientes de pago a cargo de la parte deudora a favor de la\n"
-"parte acreedora, producto de las obligaciones contenidas en el presente contrato; (b) Monto\n"
-"Máximo Garantizado: El bien mueble antes relacionado, sujeto a garantía mobiliaria, responderá\n"
-"hasta por el monto de capital del crédito identificado en las clausulas primera y segunda del\n"
-"presente contrato, así como por los interese que genere el capital adeudado (calculado como se\n"
-"establece en el presente contrato), los gastos por manejo de cuenta y resguardo de garantía,\n"
-"cargos, comisiones, daños y perjuicios que resulten del incumplimiento del presente contrato, o\n"
-"cualquier otra obligación de pago, cargo, interés o gastos que en virtud de la ley y de acuerdo a\n"
-"este contrato se cause como consecuencia del incumplimiento por parte del deudor. (c)\n"
-"Aceptación expresa de la garantía mobiliaria: Declara la parte acreedora que expresamente acepta\n"
-"la garantía mobiliaria constituida a favor. (d) Declaraciones y obligaciones de la parte deudora:\n"
-"Declara expresamente la parte deudora que: (l) salvo lo dispuesto en el presente contrato y a\n"
-"menos que se ejecute la adquisición en pago, no venderá, dará en prenda, gravará, transferirá,\n"
-"cederá, arrendará, dará en uso, usufructo o de otra forma dispondrá del bien mueble otorgado en\n"
-"garantía; (ii) No creara, incurrirá, asumirá ni permitirá que exista cualquier otro gravamen, cargo o\n"
-"imposición, directa o indirectamente, sobre el bien otorgado en garantía, sin la previa autorización\n"
-"por escrito de la parte Acreedora; (iii) La garantía mobiliaria creada en este documento incluye\n"
-"todo cuanto de hecho y por derecho le corresponde al bien dado en garantía; (iv) se obliga al pago\n"
-"de daños y perjuicios causado por el incumplimiento a lo dispuesto en el presente contrato. (e)\n"
-"Declaraciones obligaciones de la parte acreedora en posesión del bien dado en garantía:\n"
-"Corresponde al acreedor garantizado custodiar y preservar el bien dado en garantía; no utilizar los\n"
-"bienes en garantía; y responder hasta por el valor del monto del capital del presente crédito por\n"
-"los daños o perjuicios causados por su culpa o extravío del bien dado en garantía. Desde ya la\n"
-"parte deudora exime a la parte acreedora de cualquier obligación adicional respecto al bien dado\n"
-"en garantía y acepta como reparación total por dicho concepto en el monto mencionado\n"
-"anteriormente, motivo por el cual desde ya renuncia a cualquier tipo de acción o reclamación de\n"
-"índole civil, penal o administrativa que le pudiera corresponder; dándose por satisfecho y\n"
-"reparado todo daño o perjuicio con el monto de capital antes individualizado. En el evento que el\n"
-"bien dado en garantía sea uno que pueda almacenar datos u otro tipo de información, la parte\n"
-"acreedora lo tomará en garantía por el valor del mismo, excluyendo cualquier valor que puedan\n"
-"tener los datos o información que existan en dicho bien; eximiendo de responsabilidad desde ya a\n"
-"la parte acreedora por cualquier daño, sea total o parcial y/o extravío de datos y/o información\n"
+"                    bien y por tanto procede a firmarlo en señal de aceptación formando el mismo parte integral del\n"
+"                    presente acuerdo y el cual sirve para identificar el bien dado en garantía. Manifiestan los\n"
+"                    comparecientes que el contrato de garantía mobiliaria surtirá efectos entre las partes y frente a\n"
+"                    terceros a partir de la firma del presente contrato y del traslado de posesión del bien mueble dado\n"
+"                    en garantía, que para los efectos del presente contrato la parte acreedora manifiesta que se tiene\n"
+"                    por recibido. Bien enterada de las penas relativas al delito de perjurio, bajo juramento manifiesta\n"
+"                    la parte deudora que es la actual, única y legítima propietaria, el bien mueble antes relacionado se\n"
+"                    encuentra libre de cualesquiera gravámenes, reclamos, cargos, prendas (con excepción de la\n"
+"                    garantía mobiliaria constituida mediante el presente instrumento), imposiciones, limitaciones,\n"
+"                    anotaciones, derechos de garantía de cualquier índole, o cualquier litigio o disputa pendiente que\n"
+"                    pudiera afectar los derechos de la parte acreedora. Acuerdan las partes de la garantía mobiliaria\n"
+"                    se sujetara a los siguientes términos y condiciones: (a) Plazo: la garantía mobiliaria se mantendrá\n"
+"                    vigentes mientras existan saldos pendientes de pago a cargo de la parte deudora a favor de la\n"
+"                    parte acreedora, producto de las obligaciones contenidas en el presente contrato; (b) Monto\n"
+"                    Máximo Garantizado: El bien mueble antes relacionado, sujeto a garantía mobiliaria, responderá\n"
+"                    hasta por el monto de capital del crédito identificado en las clausulas primera y segunda del\n"
+"                    presente contrato, así como por los interese que genere el capital adeudado (calculado como se\n"
+"                    establece en el presente contrato), los gastos por manejo de cuenta y resguardo de garantía,\n"
+"                    cargos, comisiones, daños y perjuicios que resulten del incumplimiento del presente contrato, o\n"
+"                    cualquier otra obligación de pago, cargo, interés o gastos que en virtud de la ley y de acuerdo a\n"
+"                    este contrato se cause como consecuencia del incumplimiento por parte del deudor. (c)\n"
+"                    Aceptación expresa de la garantía mobiliaria: Declara la parte acreedora que expresamente acepta\n"
+"                    la garantía mobiliaria constituida a favor. (d) Declaraciones y obligaciones de la parte deudora:\n"
+"                    Declara expresamente la parte deudora que: (l) salvo lo dispuesto en el presente contrato y a\n"
+"                    menos que se ejecute la adquisición en pago, no venderá, dará en prenda, gravará, transferirá,\n"
+"                    cederá, arrendará, dará en uso, usufructo o de otra forma dispondrá del bien mueble otorgado en\n"
+"                    garantía; (ii) No creara, incurrirá, asumirá ni permitirá que exista cualquier otro gravamen, cargo o\n"
+"                    imposición, directa o indirectamente, sobre el bien otorgado en garantía, sin la previa autorización\n"
+"                    por escrito de la parte Acreedora; (iii) La garantía mobiliaria creada en este documento incluye\n"
+"                    todo cuanto de hecho y por derecho le corresponde al bien dado en garantía; (iv) se obliga al pago\n"
+"                    de daños y perjuicios causado por el incumplimiento a lo dispuesto en el presente contrato. (e)\n"
+"                    Declaraciones obligaciones de la parte acreedora en posesión del bien dado en garantía:\n"
+"                    Corresponde al acreedor garantizado custodiar y preservar el bien dado en garantía; no utilizar los\n"
+"                    bienes en garantía; y responder hasta por el valor del monto del capital del presente crédito por\n"
+"                    los daños o perjuicios causados por su culpa o extravío del bien dado en garantía. Desde ya la\n"
+"                    parte deudora exime a la parte acreedora de cualquier obligación adicional respecto al bien dado\n"
+"                    en garantía y acepta como reparación total por dicho concepto en el monto mencionado\n"
+"                    anteriormente, motivo por el cual desde ya renuncia a cualquier tipo de acción o reclamación de\n"
+"                    índole civil, penal o administrativa que le pudiera corresponder; dándose por satisfecho y\n"
+"                    reparado todo daño o perjuicio con el monto de capital antes individualizado. En el evento que el\n"
+"                    bien dado en garantía sea uno que pueda almacenar datos u otro tipo de información, la parte\n"
+"                    acreedora lo tomará en garantía por el valor del mismo, excluyendo cualquier valor que puedan\n"
+"                    tener los datos o información que existan en dicho bien; eximiendo de responsabilidad desde ya a\n"
+"                    la parte acreedora por cualquier daño, sea total o parcial y/o extravío de datos y/o información\n"
 "\n"
-"confidencial y de cualquier otra naturaleza que pueda contener el bien dado en garantía; motivo\n"
-"por el cual la parte deudora desde ya ratifica la renuncia de derechos antes mencionada y exime\n"
-"de cualquier tipo responsabilidad a la parte acreedora, sus representantes, trabajadores y\n"
-"colaboradores por el acaecimiento del supuesto antes dicho. IV. Las partes convienen que en caso\n"
-"sede un incumplimiento de la parte deudora, la parte acreedora podrá iniciar la ejecución de la\n"
-"garantía mobiliaria optando por: A) Ejecución judicial, de conformidad con lo establecido en la ley\n"
-"de Garantías Mobiliarias; B) La ejecución voluntaria; ó C) ejercer el pacto Adquisición en pago.\n"
-"Pacto de Adquisición en pago: Acuerdan las partes expresamente en virtud del artículo 78 de la\n"
-"Ley de Garantías Mobiliarias, que en el evento de incumplimiento o terminación anticipada, la\n"
-"parte deudora faculta expresamente a la parte acreedora para proceder con la ADQUISICIÓN DE\n"
-"PAGO del bien mueble dado en garantía según la cláusula tercera del presente documento y\n"
-"descrito de conformidad con el ANEXO l del presente contrato. Podrá adquirir el bien dado en\n"
-"garantía en pago, de conformidad con lo siguiente: (i) En caso sede un incumplimiento de\n"
-"conformidad con lo pactado en el presente acuerdo, las partes aceptan y reconocen que la parte\n"
-"acreedora dará a la parte deudora un aviso mediante notificación en la dirección física consignada\n"
-"por el deudor garante o mediante mensaje de texto vía teléfono móvil al número que consigna el\n"
-"deudor garante o bien su correo electrónico; esto a elección del acreedor y; (ii) Dicho aviso,\n"
-"deberá consignar el requerimiento del pago, advirtiendo a la parte deudora, que en el evento que\n"
-"no se manifieste dentro de los 2 días calendario siguientes a la notificación, se procederá a ejercer\n"
-"el pacto de adquisición en pago y a trasladar el dominio del bien mueble dado en garantía. (iii)\n"
-"Para efectos de la presente cláusulas la parte deudora manifiesta que las direcciones físicas y de\n"
-"correo electrónico así como el número de teléfono móvil provistas al acreedor al momento de la\n"
-"contratación de este crédito, son ciertas y que al día de hoy le pertenecen y guarda íntima relación\n"
-"con ellas, motivo por el cual desde ya acepta como bien hechas todas aquellas citaciones,\n"
-"notificaciones y/o comunicaciones que en esos lugares se le realicen, reconociendo que en todo\n"
-"caso correrá a su cargo la carga de demostrar que las notificaciones que se le hicieron no se\n"
-"ajustaron a las disposiciones de este contrato. En caso la parte deudora cambie de dirección,\n"
-"número de teléfono móvil o correo electrónico, deberá notificar este hecho inmediatamente y por\n"
-"escrito a la parte acreedora; corriendo a su cargo la carga de demostrar que el aviso de cambio de\n"
-"dirección se dio con la debida antelación a la parte acreedora. De igual forma, la parte deudora\n"
-"acepta que en el negocio jurídico que por el presente acto celebra con la acreedora, aplicaran\n"
-"algunas disposiciones de conformidad con las políticas internas de la empresa, las cuales la parte\n"
-"deudora ACEPTA y DECLARA que conoce y conoció con debida antelación previo a la celebración\n"
-"del presente contrato; V. Las partes acuerdan que la acreedora queda facultada para ceder el\n"
-"presente acuerdo en cualquier caso y sin necesidad de autorización por parte de la parte deudora.\n"
-"VI. En los términos indicados, las partes ACEPTAN el contenido completo de este documento y que\n"
-"sus posteriores actualizaciones forman parte integral contrato. En las calidades con que actúan y\n"
-"bien enterados de su contenido, objeto, validez y efectos legales lo ratifican, aceptan y firman en\n"
-"señal de su conformidad."
+"                    confidencial y de cualquier otra naturaleza que pueda contener el bien dado en garantía; motivo\n"
+"                    por el cual la parte deudora desde ya ratifica la renuncia de derechos antes mencionada y exime\n"
+"                    de cualquier tipo responsabilidad a la parte acreedora, sus representantes, trabajadores y\n"
+"                    colaboradores por el acaecimiento del supuesto antes dicho. IV. Las partes convienen que en caso\n"
+"                    sede un incumplimiento de la parte deudora, la parte acreedora podrá iniciar la ejecución de la\n"
+"                    garantía mobiliaria optando por: A) Ejecución judicial, de conformidad con lo establecido en la ley\n"
+"                    de Garantías Mobiliarias; B) La ejecución voluntaria; ó C) ejercer el pacto Adquisición en pago.\n"
+"                    Pacto de Adquisición en pago: Acuerdan las partes expresamente en virtud del artículo 78 de la\n"
+"                    Ley de Garantías Mobiliarias, que en el evento de incumplimiento o terminación anticipada, la\n"
+"                    parte deudora faculta expresamente a la parte acreedora para proceder con la ADQUISICIÓN DE\n"
+"                    PAGO del bien mueble dado en garantía según la cláusula tercera del presente documento y\n"
+"                    descrito de conformidad con el ANEXO l del presente contrato. Podrá adquirir el bien dado en\n"
+"                    garantía en pago, de conformidad con lo siguiente: (i) En caso sede un incumplimiento de\n"
+"                    conformidad con lo pactado en el presente acuerdo, las partes aceptan y reconocen que la parte\n"
+"                    acreedora dará a la parte deudora un aviso mediante notificación en la dirección física consignada\n"
+"                    por el deudor garante o mediante mensaje de texto vía teléfono móvil al número que consigna el\n"
+"                    deudor garante o bien su correo electrónico; esto a elección del acreedor y; (ii) Dicho aviso,\n"
+"                    deberá consignar el requerimiento del pago, advirtiendo a la parte deudora, que en el evento que\n"
+"                    no se manifieste dentro de los 2 días calendario siguientes a la notificación, se procederá a ejercer\n"
+"                    el pacto de adquisición en pago y a trasladar el dominio del bien mueble dado en garantía. (iii)\n"
+"                    Para efectos de la presente cláusulas la parte deudora manifiesta que las direcciones físicas y de\n"
+"                    correo electrónico así como el número de teléfono móvil provistas al acreedor al momento de la\n"
+"                    contratación de este crédito, son ciertas y que al día de hoy le pertenecen y guarda íntima relación\n"
+"                    con ellas, motivo por el cual desde ya acepta como bien hechas todas aquellas citaciones,\n"
+"                    notificaciones y/o comunicaciones que en esos lugares se le realicen, reconociendo que en todo\n"
+"                    caso correrá a su cargo la carga de demostrar que las notificaciones que se le hicieron no se\n"
+"                    ajustaron a las disposiciones de este contrato. En caso la parte deudora cambie de dirección,\n"
+"                    número de teléfono móvil o correo electrónico, deberá notificar este hecho inmediatamente y por\n"
+"                    escrito a la parte acreedora; corriendo a su cargo la carga de demostrar que el aviso de cambio de\n"
+"                    dirección se dio con la debida antelación a la parte acreedora. De igual forma, la parte deudora\n"
+"                    acepta que en el negocio jurídico que por el presente acto celebra con la acreedora, aplicaran\n"
+"                    algunas disposiciones de conformidad con las políticas internas de la empresa, las cuales la parte\n"
+"                    deudora ACEPTA y DECLARA que conoce y conoció con debida antelación previo a la celebración\n"
+"                    del presente contrato; V. Las partes acuerdan que la acreedora queda facultada para ceder el\n"
+"                    presente acuerdo en cualquier caso y sin necesidad de autorización por parte de la parte deudora.\n"
+"                    VI. En los términos indicados, las partes ACEPTAN el contenido completo de este documento y que\n"
+"                    sus posteriores actualizaciones forman parte integral contrato. En las calidades con que actúan y\n"
+"                    bien enterados de su contenido, objeto, validez y efectos legales lo ratifican, aceptan y firman en\n"
+"                    señal de su conformidad."
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ", por"
 msgstr ""
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
 msgid ""
-", por CIENTO TREINTA Y CINCO CON 00/100 QUETZALES\n"
-"(Q.135.00); suma que deberá ser reintegrada por la PARTE DEUDORA quien declara haberla\n"
-"recibido, por la cual se reconoce deudor de acuerdo a las condiciones y estipulaciones del\n"
-"presente contrato. ll: Los comparecientes acuerdan que el presente trato quedará sujeto a lo\n"
-"siguiente: ll.a) El plazo para el pago total de la obligación es de un mes calendario contado a partir\n"
-"de la fecha de firma del presente contrato; ll.b) Las partes acuerdan que el plazo del presente\n"
-"contrato y las obligaciones que conlleva, podrán ser prorrogados por períodos iguales mediante\n"
-"común acuerdo entre las partes, o bien si se da o cumple la siguiente condición: que la parte\n"
-"deudora se encuentre al día con el pago de los intereses, cargos y mora generados al finalizar el\n"
-"plazo original del contrato y no manifieste por escrito su deseo de dar por terminado el contrato.\n"
-"Dicha prórroga expresa no tendrá efecto, si la parte acreedora notificó previamente por escrito la\n"
-"resolución o el deseo de dar terminado el presente contrato al vencimiento del plazo. Dicho aviso\n"
-"previo deberá hacerlo con al menos 48 horas anticipación a la fecha de vencimiento de plazo. Se\n"
-"entenderá que se notifica por escrito, aquella notificación que se realice por cualquier vía o medio\n"
-"electrónico, que la parte acreedora pueda probar que efectivamente se realizó. ll.c) La parte\n"
-"deudora pagará el crédito mediante un (1) único pago a capital de CIENTO TREINTA Y CINCO CON\n"
-"00/100 QUETZALES (Q.135.00) al vencimiento del plazo. A partir del día siguiente al vencimiento\n"
-"del plazo sin haber realizado al menos el pago de interés y cargos, la parte deudora caerá en mora\n"
-"y se aplicará lo establecido en el numeral lll.a) inmediato posterior. Todo pago se realizará en\n"
-"Quetzales, sin necesidad de cobro ni requerimiento alguno, en la agencia de la parte acreedora\n"
-"donde se haya realizado la presente contratación, lugar que desde ya acepta la parte deudora que\n"
-"conoce. Las partes acuerdan la libertad de imputación de pagos por parte de la acreedora. lll.b En\n"
-"caso de mora, acuerdan las partes que se cobrará en concepto de interés moratorio el equivalente\n"
-"a una tasa del 18.00% mensual calculado sobre el monto total del crédito, el cual se calculará a\n"
-"partir del incumplimiento del pago de algunas de las cuotas a pagar. El mismo ser cobrará durante\n"
-"los quince (14) días siguientes al vencimiento del plazo, en cuyo caso a partir del décimo sexto (15)\n"
-"día posterior a vencido el plazo y en situación de incumplimiento, sin que se haya realizado el pago\n"
-"de los intereses y cargos adeudados a la fecha, la parte Acreedora podrá dar por terminado el\n"
-"presente contrato sin necesidad de declaración judicial y proceder de conformidad con lo\n"
-"establecido en la cláusula cuarta o quinta del presente acuerdo. ll.lV. Las partes expresamente\n"
-"acuerdan que la parte deudora podrá efectuar pagos anticipados a capital en cualquier momento\n"
-"dentro de la vigencia del presente acuerdo, pero esto no la eximirá de la obligación de pagar los\n"
-"intereses causados sobre la totalidad del capital que recibió en calidad de préstamos. ll.V. (ll.V.1)\n"
-"La parte deudora reconoce y se obliga a pagar una tasa de interés variable calculada sobre la base\n"
-"del saldo que exista al inicio del plazo que correrá a partir de la fecha de firma de presente\n"
-"contrato, que la parte deudora reconoce y pagará a la parte acreedora conforme a las normas\n"
-"siguientes: (a) La tasa de interés variable que por ahora se establece una tasa nominal del cuatro\n"
-"con 00/100 por ciento (3.00%) más el impuesto al Valor Agregado (IVA), mensual. (b) Los intereses\n"
-"causados por este crédito se liquidarán y pagarán mensualmente, dentro de cualquiera de los días\n"
-"del plazo del contrato, previo al vencimiento del mismo. (c) En cualquier momento, la parte\n"
-"\n"
-"acreedora podrá variar la tasa de interés, aumentando o disminuyendo la tasa de interés inicial, la\n"
-"que se ajustará automáticamente a partir de la fecha que estipula la correspondiente resolución\n"
-"de la parte acreedora. Dicha parte acreedora comunicará a la parte deudora, por cualquier medio\n"
-"escrito o de difusión que estime conveniente, cualquier variación de la tasa de interés aplicable a\n"
-"este contrato, la fecha en que se acordó tal variación, y la fecha en la que cobro o cobrará\n"
-"vigencia. (d) En caso que algún ente regulador o alguna entidad debidamente autoriza para el\n"
-"efecto estableciera tasas de intereses máximas para operaciones aquí previstas, se aplicaran las\n"
-"siguientes reglas: (d.i.) los intereses que devengara este contrato serán los interese máximos que\n"
-"fije la entidad autorizadas para estas operaciones, a menos que la parte acreedora decida cobrar\n"
-"una tasa menor: (d.ll) tal tasa variará automáticamente a partir de la fecha en que adquiera\n"
-"vigencia cualquier variación de la tasa máxima activa acordada por la entidad autorizada para el\n"
-"efecto o cuando, dentro de los límites legales, la parte acreedora así lo disponga; (d.iii.) se\n"
-"entiende que lo estipulado en este inciso se aplicará únicamente en el caso de que existan límites\n"
-"a la tasa de interés que la parte acreedora pueda cobrar en sus operaciones; (d.iv) en caso deje de\n"
-"aplicar lo antes mencionado, se volverá a lo dispuesto en los términos y condiciones aplicables del\n"
-"presente contrato; (ll.V.2) Acuerdan las partes que la parte acreedora cobrará los siguientes cargos\n"
-"a la parte deudora: (a) Manejo de Cuenta: Acuerdan las partes que en concepto de manejo de\n"
-"cuenta, la parte deudora pagará una cantidad equivalente al (7.50%) más el impuesto al Valor\n"
-"Agregado (IVA), calculado tomando como base el saldo que exista al inicio del plazo: (b) Resguardo\n"
-"de Garantía: Acuerdan las partes que en concepto de gastos relacionados al resguardo de la\n"
-"garantía que daba a sumir la parte acreedora relacionado con el presente contrato, la parte\n"
-"deudora pagará una cantidad equivalente al (7.50%) más el Impuesto al Valor Agregado (IVA),\n"
-"calculado tomando como base el saldo que exista al inicio del plazo. ll.Vl. Continúan manifestando\n"
-"los comparecientes que la parte acreedora podrá dar por vencido el plazo del contrato sin\n"
-"responsabilidad de su parte y exigir el Pago del capital adeudado, intereses, gastos, cargos y en su\n"
-"caso costas, así como cualquier obligación o pago adeudado conforme al presente contrato o\n"
-"incluso proceder de conformidad con la cláusula cuarta del presente contrato: (a) si la parte\n"
-"deudora dejare de pagar puntualmente, una sola mensualidad de intereses y/o recargos; o en\n"
-"caso, que al vencimiento del plazo, no cancele las amortizaciones de capital adeudadas; (b) en\n"
-"cualquier momento y de manera unilateral si se encuentra en mora por el pago de intereses o bien\n"
-"de alguna cuota de amortización; (c) si la parte deudora faltare al cumplimiento de cualquiera de\n"
-"las obligaciones que asume en este acto y las que establece la Ley, las cuales se tienen como\n"
-"incorporadas en este instrumento; (d) si la parte deudora fuere objeto de demanda, embargo,\n"
-"secuestro o intervención, si la garantía fuere anotada de demanda o de embargo, o si cesa en el\n"
-"pago de sus obligaciones o efectúa una cesión general a favor de sus acreedores, o si promueve\n"
-"concurso voluntario de acreedores o es objeto de concurso necesario de acreedores o quiebra, o si\n"
-"fuese declarada en quiebra. ll.Vll. La parte deudora autoriza a la parte acreedora para solicitar\n"
-"cualquier información de la misma a cualquier buró, sistema o equivalente. lll. El señor"
+"00/100 QUETZALES\n"
+"                    (Q."
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"<br/>\n"
+"                      DPI:"
 msgstr ""
 
 #. module: pawnshop
@@ -339,6 +355,11 @@ msgid "Config Settings"
 msgstr "Opciones de Configuración"
 
 #. module: pawnshop
+#: model:ir.model,name:pawnshop.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: pawnshop
 #: model:ir.actions.report,name:pawnshop.pawnshop_contract_report
 msgid "Contract"
 msgstr "Contratos-"
@@ -394,9 +415,20 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: pawnshop
+#: model:ir.actions.act_window,name:pawnshop.location_open_quants_pawn
+msgid "Current Stock"
+msgstr ""
+
+#. module: pawnshop
 #: model:ir.model.fields,help:pawnshop.field_pawn_pawn__access_url
 msgid "Customer Portal URL"
 msgstr "URL del portal de cliente"
+
+#. module: pawnshop
+#: model:ir.model.fields,field_description:pawnshop.field_res_partner__dpi
+#: model:ir.model.fields,field_description:pawnshop.field_res_users__dpi
+msgid "DPI"
+msgstr ""
 
 #. module: pawnshop
 #: model:ir.model.fields,field_description:pawnshop.field_pawn_order__date
@@ -469,7 +501,13 @@ msgstr "Fecha vencimiento"
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
-msgid "En la ciudad de Tiquisate, el ONCE ("
+msgid "En la ciudad de Tiquisate, el"
+msgstr ""
+
+#. module: pawnshop
+#: code:addons/pawnshop/models/pawn.py:0
+#, python-format
+msgid "Error. "
 msgstr ""
 
 #. module: pawnshop
@@ -690,18 +728,9 @@ msgid "Partner"
 msgstr "Cliente"
 
 #. module: pawnshop
-#: model:ir.model.fields,field_description:pawnshop.field_pawn_pawn__partner_name
-msgid "Partner Name"
-msgstr "Nombre Cliente"
-
-#. module: pawnshop
-#: model:ir.model.fields,field_description:pawnshop.field_pawn_pawn__partner_vat
-msgid "Partner Vat"
-msgstr "RUT Cliente"
-
-#. module: pawnshop
 #: model:ir.actions.act_window,name:pawnshop.pawn_pawn_action
 #: model:ir.model,name:pawnshop.model_pawn_pawn
+#: model:ir.model.fields,field_description:pawnshop.field_pawn_order__pawn_id
 #: model:ir.model.fields,field_description:pawnshop.field_pawn_product_search__pawn_id
 #: model:ir.model.fields,field_description:pawnshop.field_stock_picking__pawn_id
 #: model:ir.model.fields.selection,name:pawnshop.selection__pawn_pawn__type__pawn
@@ -766,6 +795,11 @@ msgid "Pawnshop"
 msgstr "Tienda de Empeño"
 
 #. module: pawnshop
+#: model:res.groups,name:pawnshop.pawnshop_manager_group
+msgid "Pawnshop Manager"
+msgstr ""
+
+#. module: pawnshop
 #: model:ir.actions.server,name:pawnshop.ir_cron_sync_pawnshop_ir_actions_server
 #: model:ir.cron,cron_name:pawnshop.ir_cron_sync_pawnshop
 #: model:ir.cron,name:pawnshop.ir_cron_sync_pawnshop
@@ -798,6 +832,7 @@ msgid "Portal Access URL"
 msgstr "URL de acceso al portal"
 
 #. module: pawnshop
+#: model:ir.model.fields,field_description:pawnshop.field_pawn_order__product_id
 #: model:ir.model.fields,field_description:pawnshop.field_pawn_pawn__product_id
 #: model_terms:ir.ui.view,arch_db:pawnshop.pawn_pawn_view_form
 msgid "Product"
@@ -827,6 +862,11 @@ msgstr "Búsqueda de Producto"
 #: model:ir.model.fields.selection,name:pawnshop.selection__pawn_pawn__state__progress
 msgid "Progress"
 msgstr "En progreso"
+
+#. module: pawnshop
+#: model:ir.model.fields.selection,name:pawnshop.selection__pawn_pawn__type__purchase
+msgid "Purchase"
+msgstr "Compra"
 
 #. module: pawnshop
 #: model:ir.model.fields,field_description:pawnshop.field_pawn_order__rate_admin
@@ -886,6 +926,11 @@ msgid "Rates used for pawnshop computed fields"
 msgstr "Tasas utilizadas para los campos calculados de casas de empeño"
 
 #. module: pawnshop
+#: model:ir.model.fields,field_description:pawnshop.field_pawn_pawn__replace_amount
+msgid "Replace Amount"
+msgstr "Remplazar Monto"
+
+#. module: pawnshop
 #: model:ir.model.fields,field_description:pawnshop.field_pawn_create_payment__residual_amount
 msgid "Residual Amount"
 msgstr "Importe residual"
@@ -899,11 +944,6 @@ msgstr "Usuario responsable"
 #: model:ir.model.fields,field_description:pawnshop.field_pawn_pawn__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr "Error de entrega del SMS"
-
-#. module: pawnshop
-#: model:ir.model.fields.selection,name:pawnshop.selection__pawn_pawn__type__sale
-msgid "Sale"
-msgstr "Venta"
 
 #. module: pawnshop
 #: model:ir.actions.act_window,name:pawnshop.pawn_sale_action
@@ -944,6 +984,11 @@ msgstr ""
 "Vencida: la fecha tope ya ha pasado\n"
 "Hoy: La fecha tope es hoy\n"
 "Planificada: futuras actividades."
+
+#. module: pawnshop
+#: model:ir.ui.menu,name:pawnshop.pawn_stock_submenu
+msgid "Stock"
+msgstr "Almacen"
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.pawn_pawn_view_form
@@ -1054,6 +1099,63 @@ msgstr "Historial de comunicaciones del sitio web"
 #: model:ir.model.fields.selection,name:pawnshop.selection__pawn_pawn__term__weekly
 msgid "Weekly"
 msgstr "Semanalmente"
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"_____________________________\n"
+"                      <br/>\n"
+"                      DEUDOR:"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"_____________________________\n"
+"                      <br/>\n"
+"                      MFIG, S.A"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"calculado sobre el monto total del crédito, el cual se calculará a\n"
+"                    partir del incumplimiento del pago de algunas de las cuotas a pagar. El mismo ser cobrará durante\n"
+"                    los quince (14) días siguientes al vencimiento del plazo, en cuyo caso a partir del décimo sexto (15)\n"
+"                    día posterior a vencido el plazo y en situación de incumplimiento, sin que se haya realizado el pago\n"
+"                    de los intereses y cargos adeudados a la fecha, la parte Acreedora podrá dar por terminado el\n"
+"                    presente contrato sin necesidad de declaración judicial y proceder de conformidad con lo\n"
+"                    establecido en la cláusula cuarta o quinta del presente acuerdo. ll.lV. Las partes expresamente\n"
+"                    acuerdan que la parte deudora podrá efectuar pagos anticipados a capital en cualquier momento\n"
+"                    dentro de la vigencia del presente acuerdo, pero esto no la eximirá de la obligación de pagar los\n"
+"                    intereses causados sobre la totalidad del capital que recibió en calidad de préstamos. ll.V. (ll.V.1)\n"
+"                    La parte deudora reconoce y se obliga a pagar una tasa de interés variable calculada sobre la base\n"
+"                    del saldo que exista al inicio del plazo que correrá a partir de la fecha de firma de presente\n"
+"                    contrato, que la parte deudora reconoce y pagará a la parte acreedora conforme a las normas\n"
+"                    siguientes: (a) La tasa de interés variable que por ahora se establece una tasa nominal del"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid ""
+"calendario contado a partir\n"
+"                    de la fecha de firma del presente contrato; ll.b) Las partes acuerdan que el plazo del presente\n"
+"                    contrato y las obligaciones que conlleva, podrán ser prorrogados por períodos iguales mediante\n"
+"                    común acuerdo entre las partes, o bien si se da o cumple la siguiente condición: que la parte\n"
+"                    deudora se encuentre al día con el pago de los intereses, cargos y mora generados al finalizar el\n"
+"                    plazo original del contrato y no manifieste por escrito su deseo de dar por terminado el contrato.\n"
+"                    Dicha prórroga expresa no tendrá efecto, si la parte acreedora notificó previamente por escrito la\n"
+"                    resolución o el deseo de dar terminado el presente contrato al vencimiento del plazo. Dicho aviso\n"
+"                    previo deberá hacerlo con al menos 48 horas anticipación a la fecha de vencimiento de plazo. Se\n"
+"                    entenderá que se notifica por escrito, aquella notificación que se realice por cualquier vía o medio\n"
+"                    electrónico, que la parte acreedora pueda probar que efectivamente se realizó. ll.c) La parte\n"
+"                    deudora pagará el crédito mediante un (1) único pago a capital de"
+msgstr ""
+
+#. module: pawnshop
+#: model_terms:ir.ui.view,arch_db:pawnshop.contract_template
+msgid "con 00/100 por ciento ("
+msgstr ""
 
 #. module: pawnshop
 #: model_terms:ir.ui.view,arch_db:pawnshop.contract_template

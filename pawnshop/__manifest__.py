@@ -19,10 +19,13 @@
         'data/ir_sequence_data.xml',
         'data/stock_data.xml',
         'security/ir.model.access.csv',
+        'security/security.xml',
         'wizard/pawn_create_payment.xml',
         'views/pawn_views.xml',
         'views/product_views.xml',
+        'views/partner_views.xml',
         'views/contract_template.xml',
+        'views/receipt_template.xml',
         'views/ir_actions_report.xml',
         'views/res_config_settings_views.xml',
     ]

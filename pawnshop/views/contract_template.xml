@@ -191,7 +191,7 @@
                       _____________________________
                       <br/>
                       DEUDOR: <span t-esc="o.partner_id.name.upper()"/><br/>
-                      DPI: <span t-esc="o.partner_id.vat"/>
+                      DPI: <span t-esc="o.partner_id.dpi"/>
                     </div>
                   </div>
                 </div>

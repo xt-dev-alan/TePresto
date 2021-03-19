@@ -24,7 +24,14 @@
             paperformat='paperformat_pawnshop_contrat_report'
         />
 
-            <!-- attachment="('GAP_%s_pdf'%object.name)" -->
+        <report id="pawnshop_receipt_report"
+            model="pawn.pawn"
+            string="Receipt"
+            name="pawnshop.receipt_template"
+            file="pawnshop.receipt_template"
+            report_type="qweb-pdf"
+        />
+
     </data>
 </odoo>
 

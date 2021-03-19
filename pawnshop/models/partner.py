@@ -9,6 +9,8 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    dpi = fields.Char(string="DPI")
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
