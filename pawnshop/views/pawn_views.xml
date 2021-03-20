@@ -50,7 +50,7 @@
                             <field name="order_id" />
                             <field name="currency_id" invisible="1"/>
                             <field name="amount" />
-                            <field name="replace_amount" groups="pawnshop.pawnshop_manager_group"/>
+                            <field name="replace_amount" attrs="{'invisible': [('state', '!=', 'draft')]}" groups="pawnshop.pawnshop_manager_group"/>
                             <field name="approved_date" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             <field name="due_date" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             <field name="user_id" invisible="1"/>
@@ -189,12 +189,12 @@
     </record>
 
     <record id="pawn_sale_action" model="ir.actions.act_window">
-        <field name="name">Sales</field>
+        <field name="name">Purchases</field>
         <field name="res_model">pawn.pawn</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="pawn_pawn_view_tree"/>
-        <field name="domain">[('type', '=', 'sale')]</field>
-        <field name="context">{'default_type': 'sale'}</field>
+        <field name="domain">[('type', '=', 'purchase')]</field>
+        <field name="context">{'default_type': 'purchase'}</field>
     </record>
 
     <record id="pawn_order_action" model="ir.actions.act_window">
@@ -233,7 +233,7 @@
 
     <menuitem
         id="pawn_sale_submenu"
-        name="Sales"
+        name="Purchase"
         action="pawn_sale_action"
         parent="pawn_root_menu"
         sequence="15"/>
