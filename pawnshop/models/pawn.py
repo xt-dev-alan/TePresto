@@ -133,6 +133,7 @@ class PawnPawn(models.Model):
                             'city': record.partner_id.city,
                             'phone': record.partner_id.phone,
                         } )
+            product_id.write({'available_in_pos': record.type == 'purchase'})
             record.create_stock_move(type=record.type)
         
     def action_close(self):
@@ -247,6 +248,16 @@ class PawnPawn(models.Model):
         action['context'] = dict(self._context, default_partner_id=self.partner_id.id, default_origin=self.name)
         return action
 
+    def action_view_order(self):
+        '''
+        '''
+        action = self.env.ref('pawnshop.pawn_order_action2')
+        result = action.read()[0]
+        # result['view_mode'] = 'form'
+        # result['view_id'] = self.env.ref('pawnshop.pawn_order_view_form').id
+        result['res_id'] = self.order_id.id or False
+        return result
+
     def _get_num2words(self, value):
         return num2words( value, lang='es')
 
@@ -293,7 +304,9 @@ class PawnOrder(models.Model):
     amount = fields.Monetary(string='Amount', readonly=True)
 
     interests = fields.Monetary(string='Interests', store=True, compute="_compute_balance")
-    balance = fields.Monetary(string='Balance', store=True, compute="_compute_balance")
+    balance = fields.Monetary(string='Residual Amount', store=True, compute="_compute_balance")
+    total = fields.Monetary(string='Residual Total', store=True, compute="_compute_balance")
+    
 
     @api.depends('amount', 'payment_ids.amount', 'rate_arrear')
     def _compute_balance(self):
@@ -302,20 +315,25 @@ class PawnOrder(models.Model):
             payment_total = sum( record.payment_ids.mapped( lambda p: p.amount - p.interests ) )
             balance = record.amount - payment_total
             if not balance:
-                pawn_id = pawn.search([('order_id', '=', record.id)], limit=1)
-                _logger.info( pawn_id )
-                pawn_id.action_close()
+                record.pawn_id.action_close()
             amount_loan = balance * (record.rate_loan / 100.0)
             amount_stock = balance * (record.rate_stock / 100.0)
             amount_admin = balance * (record.rate_admin/ 100.0)
             amount_arrear = balance * (record.rate_arrear/ 100.0)
+
+            if record.pawn_id.state in ['close', 'expired']:
+                total = 0.0
+            else:
+                total = record.balance + record.interests
+
             record.update({
                 'amount_loan': amount_loan,
                 'amount_stock': amount_stock,
                 'amount_admin': amount_admin,
                 'amount_arrear': amount_arrear,
                 'interests': amount_loan + amount_stock + amount_admin + amount_arrear,
-                'balance': balance
+                'balance': balance,
+                'total': total
             })
             
     @api.model
@@ -326,18 +344,6 @@ class PawnOrder(models.Model):
         return result
 
 
-    def action_view_invoice(self):
-        '''
-        This function returns an action that display existing vendor bills of given purchase order ids.
-        When only one found, show the vendor bill immediately.
-        '''
-        action = self.env.ref('account.action_move_in_invoice_type')
-        result = action.read()[0]
-        res = self.env.ref('account.view_move_form', False)
-        form_view = [(res and res.id or False, 'form')]
-        result['views'] = form_view
-        result['res_id'] = self.move_id.id or False
-        return result
 
     def unlink(self):
         for order in self:
